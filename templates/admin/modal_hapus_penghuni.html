@@ -1,0 +1,81 @@
+<div class="modal fade" id="hapusModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form method="POST"
+          action="{{ url_for('hapus_penghuni', id=p.id) }}"
+          class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Hapus Data Penghuni</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <label>Alasan Keluar</label>
+        <select name="alasan_keluar" id="alasan"
+                class="form-control mb-2" required>
+          <option value="">-- Pilih --</option>
+          <option value="meninggal">Meninggal Dunia</option>
+          <option value="diadopsi">Diadopsi</option>
+          <option value="kembali_keluarga">Kembali ke Keluarga</option>
+          <option value="pindah_panti">Pindah ke Panti Lain</option>
+          <option value="lainnya">Lainnya</option>
+        </select>
+
+        <textarea name="keterangan" class="form-control mb-2"
+          placeholder="Keterangan tambahan"></textarea>
+
+        <!-- FORM ADOPSI -->
+        <div id="formAdopsi" style="display:none;">
+          <hr>
+          <h6>Data Orang Tua Adopsi</h6>
+
+          <input name="nama_wali_adopsi" class="form-control mb-2"
+                 placeholder="Nama Lengkap">
+
+          <input name="nik_wali_adopsi" class="form-control mb-2"
+                 placeholder="NIK">
+
+          <textarea name="alamat_wali" class="form-control mb-2"
+            placeholder="Alamat"></textarea>
+
+          <input name="no_hp_wali" class="form-control mb-2"
+                 placeholder="No HP">
+
+          <input name="pekerjaan" class="form-control mb-2"
+                 placeholder="Pekerjaan">
+
+          <select name="status_pernikahan" class="form-control mb-2">
+            <option value="menikah">Menikah</option>
+            <option value="belum_menikah">Belum Menikah</option>
+          </select>
+
+          <input type="date" name="tanggal_adopsi"
+                 class="form-control mb-2">
+
+          <input name="no_sk_adopsi" class="form-control mb-2"
+                 placeholder="No SK Adopsi">
+
+          <input name="instansi_pengesah" class="form-control mb-2"
+                 placeholder="Instansi Pengesah">
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button class="btn btn-danger">Simpan</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+document.getElementById('alasan').addEventListener('change', function(){
+  document.getElementById('formAdopsi').style.display =
+    this.value === 'diadopsi' ? 'block' : 'none';
+});
+</script>

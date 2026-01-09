@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Detail Penghuni</h3>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <p><b>NIK:</b> {{ p.nik }}</p>
+    <p><b>Nama:</b> {{ p.nama_anak }}</p>
+    <p><b>Jenis Kelamin:</b> {{ 'Laki-laki' if p.jenis_kelamin=='L' else 'Perempuan' }}</p>
+    <p><b>Usia:</b> {{ p.usia }}</p>
+    <p><b>Alamat:</b> {{ p.alamat }}</p>
+    <p><b>Pendidikan:</b> {{ p.pendidikan }}</p>
+
+    <p><b>Berkebutuhan Khusus:</b>
+      {% if p.berkebutuhan_khusus == 'ya' %}
+        Ya
+        <br><b>Treatment:</b> {{ p.treatment_khusus }}
+      {% else %}
+        Tidak
+      {% endif %}
+    </p>
+
+    <p><b>Wali:</b> {{ p.nama_wali }} ({{ p.no_hp }})</p>
+
+    {% if p.foto %}
+      <img src="{{ url_for('static', filename='uploads/' ~ p.foto) }}"
+           class="img-thumbnail" width="200">
+    {% endif %}
+  </div>
+</div>
+
+<a href="{{ url_for('edit_penghuni', id=p.id) }}"
+   class="btn btn-warning">Edit</a>
+
+<button class="btn btn-danger" data-bs-toggle="modal"
+        data-bs-target="#hapusModal">
+  Hapus
+</button>
+
+{% include 'admin/modal_hapus_penghuni.html' %}
+
+{% endblock %}

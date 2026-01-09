@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Data Penghuni</h3>
+
+<table class="table table-bordered table-sm">
+  <thead class="table-light">
+    <tr>
+      <th>Nama</th>
+      <th>JK</th>
+      <th>Usia</th>
+      <th>Berkebutuhan</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in data %}
+    <tr>
+      <td>{{ p.nama_anak }}</td>
+      <td>{{ p.jenis_kelamin }}</td>
+      <td>{{ p.usia }}</td>
+      <td>
+        {% if p.berkebutuhan_khusus == 'ya' %}
+          <span class="badge bg-danger">Ya</span>
+        {% else %}
+          <span class="badge bg-success">Tidak</span>
+        {% endif %}
+      </td>
+      <td>
+        <a href="{{ url_for('penghuni_detail', id=p.id) }}"
+           class="btn btn-sm btn-warning">Detail</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

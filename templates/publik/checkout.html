@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Pembayaran Donasi</h3>
+<p>Terima kasih atas kepercayaan Anda</p>
+
+<h5>Detail Donatur</h5>
+<p><b>Nama:</b>
+  {{ 'Hamba Allah' if donasi.is_anonim else donasi.nama_donatur }}
+</p>
+<p><b>Kota:</b> {{ donasi.kota }}</p>
+<p><b>Telepon:</b> {{ donasi.no_hp }}</p>
+<p><b>Doa:</b> {{ donasi.doa }}</p>
+
+<hr>
+
+<h5>Ringkasan Pembayaran</h5>
+<p>
+  Jumlah Donasi:
+  <b>Rp {{ "{:,.0f}".format(donasi.jumlah) }}</b>
+</p>
+
+<p>Status Pembayaran:
+  <span class="badge bg-warning">Pending</span>
+</p>
+
+<button id="pay-button" class="btn btn-primary">
+  Bayar Sekarang
+</button>
+
+<p class="mt-3">
+Pembayaran aman dilindungi oleh <b>Midtrans</b>
+</p>
+
+<!-- MIDTRANS -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ midtrans_client_key }}">
+</script>
+
+<script>
+document.getElementById('pay-button').addEventListener('click', function () {
+    fetch("{{ url_for('bayar_donasi', id=donasi.id) }}", {
+        method: "POST"
+    })
+    .then(res => res.json())
+    .then(data => {
+        snap.pay(data.snap_token, {
+            onSuccess: function(result){
+                alert("Pembayaran berhasil");
+                console.log(result);
+            },
+            onPending: function(result){
+                alert("Menunggu pembayaran");
+                console.log(result);
+            },
+            onError: function(result){
+                alert("Pembayaran gagal");
+                console.log(result);
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

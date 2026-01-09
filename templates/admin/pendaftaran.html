@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-3">Pendaftaran Menunggu Persetujuan</h3>
+
+<table class="table table-bordered table-hover table-sm">
+  <thead class="table-light">
+    <tr>
+      <th>Nama Anak</th>
+      <th>JK</th>
+      <th>Usia</th>
+      <th>Asal</th>
+      <th>Berkebutuhan Khusus</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in data %}
+    <tr>
+      <td>{{ p.nama_anak }}</td>
+      <td>{{ 'Laki-laki' if p.jenis_kelamin=='L' else 'Perempuan' }}</td>
+      <td>{{ p.usia }}</td>
+      <td>{{ p.asal }}</td>
+      <td>
+        {% if p.berkebutuhan_khusus == 'ya' %}
+          <span class="badge bg-danger">Ya</span>
+        {% else %}
+          <span class="badge bg-success">Tidak</span>
+        {% endif %}
+      </td>
+      <td>
+        <a href="{{ url_for('detail_pendaftaran', id=p.id) }}"
+           class="btn btn-sm btn-warning">
+           Detail
+        </a>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="6" class="text-center text-muted">
+        Tidak ada pendaftaran menunggu
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

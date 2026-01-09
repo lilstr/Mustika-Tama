@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <h2>Panti Asuhan Mustika Tama Bantul</h2>
+    <p class="text-muted">
+      Lembaga Kesejahteraan Sosial Anak (LKSA)
+    </p>
+
+    <p>
+      Panti Asuhan Mustika Tama Bantul merupakan lembaga sosial yang bergerak
+      dalam bidang pengasuhan, pendidikan, dan pembinaan anak-anak yatim,
+      piatu, dan dhuafa. Panti ini berada di bawah pembinaan Dinas Sosial
+      Kabupaten Bantul dan berkomitmen menciptakan lingkungan yang aman,
+      religius, dan edukatif.
+    </p>
+
+    <h5>Visi</h5>
+    <p>
+      Terwujudnya generasi anak asuh yang mandiri, berakhlak mulia, dan
+      berdaya saing.
+    </p>
+
+    <h5>Misi</h5>
+    <ul>
+      <li>Memberikan pengasuhan yang layak dan berkelanjutan</li>
+      <li>Menyelenggarakan pendidikan formal dan non-formal</li>
+      <li>Membina karakter dan nilai keagamaan</li>
+      <li>Meningkatkan kepedulian sosial masyarakat</li>
+    </ul>
+
+    <a href="{{ url_for('daftar') }}" class="btn btn-primary mt-3">
+      Daftar Calon Penghuni
+    </a>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Informasi Singkat</h6>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">📍 Bantul, DI Yogyakarta</li>
+          <li class="list-group-item">👶 Anak Asuh: ±30</li>
+          <li class="list-group-item">🏫 Pendidikan Formal</li>
+          <li class="list-group-item">🤝 Terbuka Donasi</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h3 class="mb-4">Dashboard Admin</h3>
+
+  <!-- STATISTIK UTAMA -->
+  <div class="row mb-4">
+
+    <!-- TOTAL PENGHUNI -->
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h6 class="text-muted">Total Penghuni</h6>
+          <h2 class="fw-bold">{{ penghuni }}</h2>
+          <small class="text-muted">Hasil pendaftaran yang disetujui</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOTAL DONATUR -->
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h6 class="text-muted">Total Donatur</h6>
+          <h2 class="fw-bold">{{ donatur }}</h2>
+          <small class="text-muted">(Donasi sukses)</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOTAL DONASI -->
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h6 class="text-muted">Total Donasi Masuk</h6>
+          <h2 class="fw-bold text-success">
+            Rp {{ "{:,.0f}".format(total_donasi) }}
+          </h2>
+          <small class="text-muted">(Paid saja)</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STATISTIK PENDAFTARAN -->
+  <div class="row mb-4">
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 bg-warning bg-opacity-10">
+        <div class="card-body text-center">
+          <h6 class="text-muted">Pendaftaran Menunggu</h6>
+          <h2 class="fw-bold text-warning">{{ pendaftaran_menunggu }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 bg-success bg-opacity-10">
+        <div class="card-body text-center">
+          <h6 class="text-muted">Pendaftaran Disetujui</h6>
+          <h2 class="fw-bold text-success">{{ pendaftaran_disetujui }}</h2>
+          <small class="text-muted">Masuk ke data penghuni</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 bg-danger bg-opacity-10">
+        <div class="card-body text-center">
+          <h6 class="text-muted">Pendaftaran Ditolak</h6>
+          <h2 class="fw-bold text-danger">{{ pendaftaran_ditolak }}</h2>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STATUS DONASI -->
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h5 class="mb-3">Ringkasan Status Donasi</h5>
+
+      <table class="table table-bordered table-sm">
+        <thead class="table-light">
+          <tr>
+            <th>Status</th>
+            <th>Jumlah Transaksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in status_donasi %}
+          <tr>
+            <td>
+              {% if s.status == 'paid' %}
+                <span class="badge bg-success">Paid</span>
+              {% elif s.status == 'pending' %}
+                <span class="badge bg-warning text-dark">Pending</span>
+              {% else %}
+                <span class="badge bg-danger">Failed</span>
+              {% endif %}
+            </td>
+            <td>{{ s.total }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

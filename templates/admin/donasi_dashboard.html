@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Dashboard Donasi</h3>
+
+<div class="mb-3">
+  <a href="/admin/donasi" class="btn btn-secondary btn-sm">Semua</a>
+  <a href="/admin/donasi?status=paid" class="btn btn-success btn-sm">Paid</a>
+  <a href="/admin/donasi?status=pending" class="btn btn-warning btn-sm">Pending</a>
+  <a href="/admin/donasi?status=failed" class="btn btn-danger btn-sm">Failed</a>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nama</th>
+      <th>Nominal</th>
+      <th>Status</th>
+      <th>Tanggal</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for d in donasi %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ 'Hamba Allah' if d.anonim else d.nama_donatur }}</td>
+      <td>Rp {{ "{:,.0f}".format(d.jumlah) }}</td>
+      <td>
+        {% if d.status == 'paid' %}
+          <span class="badge bg-success">Paid</span>
+        {% elif d.status == 'pending' %}
+          <span class="badge bg-warning">Pending</span>
+        {% else %}
+          <span class="badge bg-danger">Failed</span>
+        {% endif %}
+      </td>
+      <td>{{ d.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Edit Data Penghuni</h3>
+
+<form method="POST"
+      enctype="multipart/form-data"
+      onsubmit="return confirm('⚠️ Yakin ingin menyimpan perubahan data penghuni ini?');">
+
+  <!-- NIK -->
+  <label>NIK</label>
+  <input class="form-control mb-2"
+         name="nik"
+         value="{{ p.nik }}"
+         required>
+
+  <!-- Nama -->
+  <label>Nama Anak</label>
+  <input class="form-control mb-2"
+         name="nama_anak"
+         value="{{ p.nama_anak }}"
+         required>
+
+  <!-- Jenis Kelamin -->
+  <label>Jenis Kelamin</label>
+  <select name="jenis_kelamin" class="form-control mb-2" required>
+    <option value="L"
+      {% if p.jenis_kelamin == 'Laki-laki' %}selected{% endif %}>
+      Laki-laki
+    </option>
+    <option value="P"
+      {% if p.jenis_kelamin == 'Perempuan' %}selected{% endif %}>
+      Perempuan
+    </option>
+  </select>
+
+  <!-- Tanggal Lahir -->
+  <label>Tanggal Lahir</label>
+  <input type="date"
+         name="tanggal_lahir"
+         class="form-control mb-2"
+         value="{{ p.tanggal_lahir }}">
+
+  <!-- Usia -->
+  <label>Usia</label>
+  <input name="usia"
+         type="number"
+         class="form-control mb-2"
+         value="{{ p.usia }}">
+
+  <!-- Asal -->
+  <label>Asal</label>
+  <input name="asal"
+         class="form-control mb-2"
+         value="{{ p.asal }}">
+
+  <!-- Pendidikan -->
+  <label>Pendidikan</label>
+  <input name="pendidikan"
+         class="form-control mb-2"
+         value="{{ p.pendidikan }}">
+
+  <!-- Alamat -->
+  <label>Alamat</label>
+  <textarea name="alamat"
+            class="form-control mb-2">{{ p.alamat }}</textarea>
+
+  <!-- Berkebutuhan Khusus -->
+  <label>Berkebutuhan Khusus</label>
+  <select name="berkebutuhan_khusus"
+          id="bk"
+          class="form-control mb-2">
+    <option value="tidak"
+      {% if p.berkebutuhan_khusus == 'tidak' %}selected{% endif %}>
+      Tidak
+    </option>
+    <option value="ya"
+      {% if p.berkebutuhan_khusus == 'ya' %}selected{% endif %}>
+      Ya
+    </option>
+  </select>
+
+  <!-- Treatment Khusus -->
+  <textarea name="treatment_khusus"
+            id="treatment"
+            class="form-control mb-2 {% if p.berkebutuhan_khusus != 'ya' %}d-none{% endif %}"
+            placeholder="Isi treatment khusus">{{ p.treatment_khusus }}</textarea>
+
+  <!-- Nama Wali -->
+  <label>Nama Wali</label>
+  <input name="nama_wali"
+         class="form-control mb-2"
+         value="{{ p.nama_wali }}">
+
+  <!-- No HP -->
+  <label>No HP</label>
+  <input name="no_hp"
+         class="form-control mb-2"
+         value="{{ p.no_hp }}">
+
+  <!-- Alasan -->
+  <label>Alasan Masuk Panti</label>
+  <textarea name="alasan"
+            class="form-control mb-2">{{ p.alasan }}</textarea>
+
+  <!-- Foto Lama -->
+  {% if p.foto %}
+    <label>Foto Saat Ini</label><br>
+    <img src="{{ url_for('static', filename='uploads/' ~ p.foto) }}"
+         width="120"
+         class="mb-2 rounded"><br>
+  {% endif %}
+
+  <!-- Upload Foto Baru -->
+  <label>Ganti Foto (opsional)</label>
+  <input type="file"
+         name="foto"
+         class="form-control mb-3">
+
+  <button class="btn btn-primary">
+    💾 Simpan Perubahan
+  </button>
+
+  <a href="{{ url_for('penghuni_detail', id=p.id) }}"
+     class="btn btn-secondary">
+    Batal
+  </a>
+
+</form>
+
+<script>
+document.getElementById('bk').addEventListener('change', function () {
+  const treatment = document.getElementById('treatment');
+  if (this.value === 'ya') {
+    treatment.classList.remove('d-none');
+  } else {
+    treatment.classList.add('d-none');
+    treatment.value = '';
+  }
+});
+</script>
+
+{% endblock %}

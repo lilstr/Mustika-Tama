@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="text-center mt-5">
+  <h2>Terima Kasih 🙏</h2>
+  <p>Donasi Anda sangat berarti bagi kami</p>
+
+  <hr>
+
+  <p><b>Nama:</b>
+    {{ 'Hamba Allah' if donasi.anonim else donasi.nama_donatur }}
+  </p>
+  <p><b>Nominal:</b> Rp {{ "{:,.0f}".format(donasi.jumlah) }}</p>
+  <p><b>Status:</b>
+    <span class="badge bg-success">Berhasil</span>
+  </p>
+
+  <a href="/" class="btn btn-primary mt-3">Kembali ke Beranda</a>
+</div>
+
+{% endblock %}
