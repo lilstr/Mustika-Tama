@@ -1,0 +1,12 @@
+Latest OTP sent to: starseverus@gmail.com
+Subject: Kode OTP Reset Password Admin
+Body:
+Anda menerima permintaan reset password untuk akun admin.
+
+Kode OTP Anda adalah: 620295
+Kode ini berlaku selama 10 menit.
+
+Jika Anda tidak meminta reset, abaikan email ini.
+==================================================
+Attempting to send via SMTP...
+SMTP send successful.
