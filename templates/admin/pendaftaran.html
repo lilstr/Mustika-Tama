@@ -1,48 +1,62 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3 class="mb-3">Pendaftaran Menunggu Persetujuan</h3>
+<h3 class="mb-4">
+  <i class="bi bi-clipboard-check text-primary"></i> Pendaftaran Menunggu Persetujuan
+</h3>
 
-<table class="table table-bordered table-hover table-sm">
-  <thead class="table-light">
-    <tr>
-      <th>Nama Anak</th>
-      <th>JK</th>
-      <th>Usia</th>
-      <th>Asal</th>
-      <th>Berkebutuhan Khusus</th>
-      <th>Aksi</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for p in data %}
-    <tr>
-      <td>{{ p.nama_anak }}</td>
-      <td>{{ 'Laki-laki' if p.jenis_kelamin=='L' else 'Perempuan' }}</td>
-      <td>{{ p.usia }}</td>
-      <td>{{ p.asal }}</td>
-      <td>
-        {% if p.berkebutuhan_khusus == 'ya' %}
-          <span class="badge bg-danger">Ya</span>
-        {% else %}
-          <span class="badge bg-success">Tidak</span>
-        {% endif %}
-      </td>
-      <td>
-        <a href="{{ url_for('detail_pendaftaran', id=p.id) }}"
-           class="btn btn-sm btn-warning">
-           Detail
-        </a>
-      </td>
-    </tr>
-    {% else %}
-    <tr>
-      <td colspan="6" class="text-center text-muted">
-        Tidak ada pendaftaran menunggu
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{% if data %}
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th><i class="bi bi-person"></i> Nama Anak</th>
+          <th><i class="bi bi-gender-ambiguous"></i> JK</th>
+          <th><i class="bi bi-calendar"></i> Usia</th>
+          <th><i class="bi bi-geo-alt"></i> Asal</th>
+          <th><i class="bi bi-bandaid"></i> Kebutuhan</th>
+          <th><i class="bi bi-gear"></i> Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in data %}
+        <tr>
+          <td class="text-muted">{{ loop.index }}</td>
+          <td><strong>{{ p.nama_anak }}</strong></td>
+          <td>
+            {% if p.jenis_kelamin == 'L' %}
+              <span class="badge bg-info">Laki-laki</span>
+            {% else %}
+              <span class="badge bg-danger">Perempuan</span>
+            {% endif %}
+          </td>
+          <td>{{ p.usia }} tahun</td>
+          <td>{{ p.asal }}</td>
+          <td>
+            {% if p.berkebutuhan_khusus == 'ya' %}
+              <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle"></i> Ya</span>
+            {% else %}
+              <span class="badge bg-success">Tidak</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('detail_pendaftaran', id=p.id) }}"
+               class="btn btn-sm btn-primary">
+               <i class="bi bi-eye"></i> Detail
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+  <i class="bi bi-info-circle"></i> Tidak ada pendaftaran yang menunggu persetujuan.
+</div>
+{% endif %}
 
 {% endblock %}

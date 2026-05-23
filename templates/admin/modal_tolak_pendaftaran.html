@@ -4,28 +4,35 @@
           action="{{ url_for('tolak_pendaftaran', id=p.id) }}"
           class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title">Tolak Pendaftaran</h5>
-        <button type="button" class="btn-close"
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle"></i> Tolak Pendaftaran
+        </h5>
+        <button type="button" class="btn-close btn-close-white"
                 data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
-        <label>Alasan Penolakan</label>
+        <div class="alert alert-warning mb-3">
+          <i class="bi bi-info-circle"></i> Tindakan ini tidak dapat dibatalkan. Pastikan Anda telah review data dengan cermat.
+        </div>
+
+        <label class="form-label">Alasan Penolakan *</label>
         <textarea name="catatan_admin"
                   class="form-control"
+                  rows="4"
                   required
-                  placeholder="Contoh: Data tidak lengkap / Kuota penuh"></textarea>
+                  placeholder="Jelaskan dengan detail alasan penolakan pendaftaran ini..."></textarea>
       </div>
 
       <div class="modal-footer">
         <button type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal">
-          Batal
+          <i class="bi bi-x-lg"></i> Batal
         </button>
-        <button class="btn btn-danger">
-          Tolak Pendaftaran
+        <button type="submit" class="btn btn-danger">
+          <i class="bi bi-trash"></i> Tolak Pendaftaran
         </button>
       </div>
 

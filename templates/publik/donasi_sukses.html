@@ -1,21 +1,69 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="text-center mt-5">
-  <h2>Terima Kasih 🙏</h2>
-  <p>Donasi Anda sangat berarti bagi kami</p>
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card text-center border-success">
+      <div class="card-body py-5">
+        <!-- ICON SUKSES -->
+        <div class="mb-4">
+          <i class="bi bi-check-circle text-success" style="font-size: 4rem;"></i>
+        </div>
 
-  <hr>
+        <!-- JUDUL -->
+        <h2 class="mb-3 text-success">
+          Donasi Sukses!
+        </h2>
+        <p class="lead text-muted mb-4">
+          Terima kasih atas ketulusan hati Anda
+        </p>
 
-  <p><b>Nama:</b>
-    {{ 'Hamba Allah' if donasi.anonim else donasi.nama_donatur }}
-  </p>
-  <p><b>Nominal:</b> Rp {{ "{:,.0f}".format(donasi.jumlah) }}</p>
-  <p><b>Status:</b>
-    <span class="badge bg-success">Berhasil</span>
-  </p>
+        <!-- RINGKASAN -->
+        <div class="card bg-light mb-4">
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="form-label text-muted small">Jumlah Donasi</label>
+                <p class="fs-5 fw-bold text-success">Rp {{ "{:,.0f}".format(donasi.jumlah) }}</p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="form-label text-muted small">Atas Nama</label>
+                <p class="fw-bold">
+                  {{ 'Hamba Allah' if donasi.anonim else donasi.nama_donatur }}
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label class="form-label text-muted small">Waktu Transaksi</label>
+                <p class="fw-bold">
+                  {{ donasi.created_at.strftime('%d %B %Y - %H:%M') if donasi.created_at else 'Sekarang' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <a href="/" class="btn btn-primary mt-3">Kembali ke Beranda</a>
+        <!-- PESAN -->
+        <div class="alert alert-info mb-4">
+          <i class="bi bi-info-circle"></i> 
+          Donasi Anda telah diterima dengan baik. Semoga menjadi amal jariyah yang bermanfaat.
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="d-flex gap-2 justify-content-center">
+          <a href="{{ url_for('donasi') }}" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-counterclockwise"></i> Donasi Lagi
+          </a>
+          <a href="{{ url_for('index') }}" class="btn btn-primary">
+            <i class="bi bi-house"></i> Kembali Ke Beranda
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

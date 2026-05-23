@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <div class="card shadow-lg">
+        <div class="card-header bg-success text-white">
+          <h4 class="mb-0"><i class="bi bi-file-earmark-text"></i> Laporan Data Penghuni</h4>
+        </div>
+
+        <div class="card-body p-5">
+          <div class="alert alert-info mb-4">
+            <i class="bi bi-info-circle"></i>
+            <strong>Informasi:</strong> Pilih periode laporan yang Anda inginkan, kemudian pilih format unduhan (Excel atau PDF)
+          </div>
+
+          <form id="reportForm" method="GET">
+            <!-- Periode Selection -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">Pilih Periode Laporan</label>
+              <div class="btn-group w-100" role="group">
+                <input type="radio" class="btn-check" name="period" id="period_all" value="all" checked>
+                <label class="btn btn-outline-success" for="period_all">Semua Data</label>
+
+                <input type="radio" class="btn-check" name="period" id="period_yearly" value="yearly">
+                <label class="btn btn-outline-success" for="period_yearly">Tahunan</label>
+
+                <input type="radio" class="btn-check" name="period" id="period_monthly" value="monthly">
+                <label class="btn btn-outline-success" for="period_monthly">Bulanan</label>
+              </div>
+            </div>
+
+            <!-- Year Selection -->
+            <div class="mb-4" id="yearSection">
+              <label for="year" class="form-label fw-bold">Pilih Tahun</label>
+              <select class="form-select" id="year" name="year">
+                {% for y in range(2020, 2026) %}
+                  <option value="{{ y }}" {% if y == 2025 %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Month Selection -->
+            <div class="mb-4" id="monthSection" style="display: none;">
+              <label for="month" class="form-label fw-bold">Pilih Bulan</label>
+              <select class="form-select" id="month" name="month">
+                <option value="1">Januari</option>
+                <option value="2">Februari</option>
+                <option value="3">Maret</option>
+                <option value="4">April</option>
+                <option value="5">Mei</option>
+                <option value="6">Juni</option>
+                <option value="7">Juli</option>
+                <option value="8">Agustus</option>
+                <option value="9">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
+              </select>
+            </div>
+
+            <!-- Download Buttons -->
+            <div class="d-grid gap-2 mt-5">
+              <button type="submit" class="btn btn-success btn-lg" formaction="{{ url_for('download_penghuni', format='excel') }}">
+                <i class="bi bi-file-earmark-excel"></i> Download Excel
+              </button>
+              <button type="submit" class="btn btn-danger btn-lg" formaction="{{ url_for('download_penghuni', format='pdf') }}">
+                <i class="bi bi-file-earmark-pdf"></i> Download PDF
+              </button>
+            </div>
+
+            <a href="{{ url_for('admin_penghuni') }}" class="btn btn-secondary btn-lg w-100 mt-3">
+              <i class="bi bi-arrow-left"></i> Kembali ke Data Penghuni
+            </a>
+          </form>
+
+          <!-- Preview Section -->
+          <div class="mt-5 pt-5 border-top">
+            <h5 class="mb-3"><i class="bi bi-eye"></i> Informasi Laporan</h5>
+            <ul class="list-unstyled">
+              <li><i class="bi bi-check-circle text-success"></i> <strong>Laporan Semua Data:</strong> Menampilkan seluruh data penghuni yang terdaftar</li>
+              <li><i class="bi bi-check-circle text-success"></i> <strong>Laporan Tahunan:</strong> Menampilkan data penghuni yang masuk pada tahun yang dipilih</li>
+              <li><i class="bi bi-check-circle text-success"></i> <strong>Laporan Bulanan:</strong> Menampilkan data penghuni yang masuk pada bulan dan tahun yang dipilih</li>
+              <li class="mt-2"><i class="bi bi-info-circle text-info"></i> Format Excel dapat diedit dan dianalisis lebih lanjut</li>
+              <li><i class="bi bi-info-circle text-info"></i> Format PDF siap untuk dicetak dan didistribusikan</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('input[name="period"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    const yearSection = document.getElementById('yearSection');
+    const monthSection = document.getElementById('monthSection');
+    
+    if (this.value === 'all') {
+      yearSection.style.display = 'none';
+      monthSection.style.display = 'none';
+    } else if (this.value === 'yearly') {
+      yearSection.style.display = 'block';
+      monthSection.style.display = 'none';
+    } else if (this.value === 'monthly') {
+      yearSection.style.display = 'block';
+      monthSection.style.display = 'block';
+    }
+  });
+});
+</script>
+
+{% endblock %}

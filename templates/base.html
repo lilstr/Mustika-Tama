@@ -2,92 +2,116 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title if title else "Panti Asuhan Mustika Tama" }}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom">
   <div class="container">
-    <a class="navbar-brand" href="{{ url_for('index') }}">
-      Panti Asuhan Mustika Tama
+    <a class="navbar-brand navbar-brand-custom" href="{{ url_for('index') }}">
+      <img src="{{ url_for('static', filename='uploads/logo.png') }}" alt="Logo" class="navbar-logo me-2">
+      <span>Panti Asuhan Mustika Tama</span>
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+    <button class="navbar-toggler navbar-toggler-custom" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navMenu">
-<ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-auto">
 
-  {% if session.get('admin') %}
-    <!-- ================= MENU ADMIN ================= -->
+        {% if session.get('admin') %}
+          <!-- ================= MENU ADMIN ================= -->
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
-    </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('dashboard') }}">
+              <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+          </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('admin_pendaftaran') }}">
-        Pendaftaran
-      </a>
-    </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_pendaftaran') }}">
+              <i class="bi bi-clipboard-check"></i> Pendaftaran
+            </a>
+          </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('admin_penghuni') }}">
-        Data Penghuni
-      </a>
-    </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_penghuni') }}">
+              <i class="bi bi-people"></i> Data Penghuni
+            </a>
+          </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('admin_donasi') }}">
-        Data Donasi
-      </a>
-    </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('mantan_penghuni') }}">
+              <i class="bi bi-archive"></i> Mantan Penghuni
+            </a>
+          </li>
 
-    <li class="nav-item">
-      <a class="nav-link text-warning" href="{{ url_for('logout') }}">
-        Logout
-      </a>
-    </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_donasi') }}">
+              <i class="bi bi-gift"></i> Data Donasi
+            </a>
+          </li>
 
-  {% else %}
-    <!-- ================= MENU PUBLIK ================= -->
+          <li class="nav-item">
+            <a class="nav-link text-warning" href="{{ url_for('logout') }}">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+          </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('index') }}">Beranda</a>
-    </li>
+        {% else %}
+          <!-- ================= MENU PUBLIK ================= -->
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('kegiatan') }}">Kegiatan</a>
-    </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}" style="color: #1f2937; font-size: 0.95rem;">Beranda</a>
+          </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('daftar') }}">Pendaftaran</a>
-    </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('kegiatan') }}" style="color: #1f2937; font-size: 0.95rem;">Kegiatan</a>
+          </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('donasi') }}">Donasi</a>
-    </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('daftar_overview') }}" style="color: #1f2937; font-size: 0.95rem;">Pendaftaran</a>
+          </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('login') }}">Login Admin</a>
-    </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('donasi') }}" style="color: #1f2937; font-size: 0.95rem;">Donasi</a>
+          </li>
 
-  {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login') }}" style="color: #1f2937; font-size: 0.95rem;">Login</a>
+          </li>
 
-</ul>
+        {% endif %}
 
+      </ul>
     </div>
   </div>
 </nav>
 
-<div class="container mt-4">
+<main class="container mt-4 mb-5">
+  {% if get_flashed_messages() %}
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-circle"></i> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
   {% block content %}{% endblock %}
-</div>
+</main>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+  <div class="container">
+    <p class="mb-0"><i class="bi bi-c-circle"></i> 2025 Panti Asuhan Mustika Tama. Semua Hak Dilindungi.</p>
+    <small class="text-muted">Lembaga Kesejahteraan Sosial Anak (LKSA) Bantul</small>
+  </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

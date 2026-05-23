@@ -1,9 +1,191 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Kegiatan Panti</h2>
-<ul class="list-group">
-<li class="list-group-item">Pembinaan Karakter</li>
-<li class="list-group-item">Pendidikan Formal</li>
-<li class="list-group-item">Kegiatan Keagamaan</li>
-</ul>
+
+<!-- PAGE HEADER -->
+<div class="page-header-section">
+  <div class="page-header-content">
+    <h1 class="page-title">Kegiatan Kami</h1>
+    <p class="page-subtitle">Program dan aktivitas komprehensif untuk pengembangan holistik anak-anak</p>
+  </div>
+</div>
+
+<div class="container">
+  <!-- MAIN PROGRAMS SECTION -->
+  <section class="main-programs-section">
+    <h2 class="section-title-center mb-5">Program Utama</h2>
+    
+    <div class="row g-4">
+      <!-- Card 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="program-detail-card">
+          <div class="program-detail-icon icon-1">
+            <i class="bi bi-heart-fill"></i>
+          </div>
+          <h3>Pembinaan Karakter</h3>
+          <p>Program pembinaan akhlak dan moral untuk membentuk karakter yang kuat dan positif dalam diri setiap anak asuh.</p>
+          <ul class="feature-list">
+            <li><i class="bi bi-check-lg"></i> Nilai-nilai moral & etika</li>
+            <li><i class="bi bi-check-lg"></i> Kepemimpinan & tanggung jawab</li>
+            <li><i class="bi bi-check-lg"></i> Empati & kerja sama</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="program-detail-card">
+          <div class="program-detail-icon icon-2">
+            <i class="bi bi-book-fill"></i>
+          </div>
+          <h3>Pendidikan Formal</h3>
+          <p>Mendukung pendidikan formal anak-anak dari SD hingga SMA dengan bimbingan belajar dan fasilitas lengkap.</p>
+          <ul class="feature-list">
+            <li><i class="bi bi-check-lg"></i> Bimbingan akademik intensif</li>
+            <li><i class="bi bi-check-lg"></i> Persiapan ujian nasional</li>
+            <li><i class="bi bi-check-lg"></i> Fasilitas belajar modern</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="program-detail-card">
+          <div class="program-detail-icon icon-3">
+            <i class="bi bi-mosque"></i>
+          </div>
+          <h3>Kegiatan Keagamaan</h3>
+          <p>Kegiatan spiritual dan religius untuk memperkuat nilai-nilai agama dan pembelajaran Al-Qur'an bagi semua anak.</p>
+          <ul class="feature-list">
+            <li><i class="bi bi-check-lg"></i> Pembelajaran Al-Qur'an</li>
+            <li><i class="bi bi-check-lg"></i> Shalat berjamaah</li>
+            <li><i class="bi bi-check-lg"></i> Ceramah & tausiah</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIAL PROGRAMS SECTION -->
+  <section class="special-programs-section">
+    <div class="special-programs-header">
+      <i class="bi bi-star-fill"></i>
+      <h2>Program Khusus Kami</h2>
+    </div>
+    
+    <div class="special-programs-grid">
+      <div class="special-program-item">
+        <div class="special-program-icon">
+          <i class="bi bi-pencil-square"></i>
+        </div>
+        <h4>Kelas Tambahan & Bimbingan</h4>
+        <p>Program bimbingan belajar intensif untuk meningkatkan prestasi akademik</p>
+      </div>
+
+      <div class="special-program-item">
+        <div class="special-program-icon">
+          <i class="bi bi-hammer"></i>
+        </div>
+        <h4>Keterampilan Praktis</h4>
+        <p>Life skills dan pelatihan praktis untuk persiapan masa depan</p>
+      </div>
+
+      <div class="special-program-item">
+        <div class="special-program-icon">
+          <i class="bi bi-bicycle"></i>
+        </div>
+        <h4>Olahraga & Rekreasi</h4>
+        <p>Aktivitas fisik dan olahraga untuk kesehatan jasmani optimal</p>
+      </div>
+
+      <div class="special-program-item">
+        <div class="special-program-icon">
+          <i class="bi bi-palette"></i>
+        </div>
+        <h4>Seni & Budaya</h4>
+        <p>Pengembangan talenta seni, musik, dan ekspresi kreatif</p>
+      </div>
+
+      <div class="special-program-item">
+        <div class="special-program-icon">
+          <i class="bi bi-heart-pulse"></i>
+        </div>
+        <h4>Kesehatan & Nutrisi</h4>
+        <p>Program kesehatan komprehensif dan penyediaan gizi seimbang</p>
+      </div>
+
+      <div class="special-program-item">
+        <div class="special-program-icon">
+          <i class="bi bi-chat-left-heart"></i>
+        </div>
+        <h4>Mentoring & Konseling</h4>
+        <p>Bimbingan emosional dan konseling dari para profesional</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAILY SCHEDULE SECTION -->
+  <section class="daily-schedule-section">
+    <h2 class="section-title-center mb-5">Rutinitas Harian</h2>
+    
+    <div class="schedule-timeline">
+      <div class="schedule-item">
+        <div class="schedule-time">06:00 - 07:00</div>
+        <div class="schedule-activity">
+          <h4>Bangun Pagi & Ibadah</h4>
+          <p>Persiapan pagi dan kegiatan ibadah bersama</p>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">07:00 - 08:00</div>
+        <div class="schedule-activity">
+          <h4>Sarapan & Sekolah</h4>
+          <p>Makan pagi dan persiapan ke sekolah</p>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">14:00 - 15:30</div>
+        <div class="schedule-activity">
+          <h4>Bimbingan Belajar</h4>
+          <p>Kegiatan belajar tambahan dan tugas sekolah</p>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">15:30 - 17:00</div>
+        <div class="schedule-activity">
+          <h4>Ekstrakurikuler</h4>
+          <p>Olahraga, seni, musik, atau keterampilan praktis</p>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">17:00 - 18:00</div>
+        <div class="schedule-activity">
+          <h4>Makan & Istirahat</h4>
+          <p>Makan sore dan waktu istirahat santai</p>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">18:00 - 21:00</div>
+        <div class="schedule-activity">
+          <h4>Kegiatan Malam</h4>
+          <p>Ibadah malam, belajar, dan waktu berkumpul keluarga</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="kegiatan-cta">
+    <h2>Tertarik Bergabung?</h2>
+    <p>Daftarkan diri Anda atau keluarga Anda hari ini dan jadilah bagian dari keluarga Panti Mustika Tama</p>
+    <a href="{{ url_for('daftar_overview') }}" class="btn btn-daftar">
+      <i class="bi bi-hand-thumbs-up"></i>Mulai Pendaftaran
+    </a>
+  </section>
+</div>
+
 {% endblock %}

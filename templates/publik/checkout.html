@@ -1,36 +1,94 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Pembayaran Donasi</h3>
-<p>Terima kasih atas kepercayaan Anda</p>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="mb-0">
+          <i class="bi bi-wallet2 text-warning"></i> Konfirmasi Pembayaran
+        </h3>
+      </div>
 
-<h5>Detail Donatur</h5>
-<p><b>Nama:</b>
-  {{ 'Hamba Allah' if donasi.is_anonim else donasi.nama_donatur }}
-</p>
-<p><b>Kota:</b> {{ donasi.kota }}</p>
-<p><b>Telepon:</b> {{ donasi.no_hp }}</p>
-<p><b>Doa:</b> {{ donasi.doa }}</p>
+      <div class="card-body">
+        <p class="lead text-center text-muted mb-4">
+          Terima kasih atas kepercayaan Anda
+        </p>
 
-<hr>
+        <!-- DETAIL DONATUR -->
+        <div class="card mb-4 bg-light">
+          <div class="card-header bg-transparent">
+            <h6 class="mb-0"><i class="bi bi-person-badge"></i> Detail Donatur</h6>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label text-muted small">Nama</label>
+                <p class="fw-bold">{{ 'Hamba Allah' if donasi.anonim else donasi.nama_donatur }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted small">Kota</label>
+                <p class="fw-bold">{{ donasi.kota }}</p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label text-muted small">Telepon</label>
+                <p class="fw-bold">{{ donasi.no_hp }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted small">Email</label>
+                <p class="fw-bold">{{ donasi.email }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label class="form-label text-muted small">Do'a & Harapan</label>
+                <p class="fw-bold">{{ donasi.doa or 'Tidak ada' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<h5>Ringkasan Pembayaran</h5>
-<p>
-  Jumlah Donasi:
-  <b>Rp {{ "{:,.0f}".format(donasi.jumlah) }}</b>
-</p>
+        <!-- RINGKASAN PEMBAYARAN -->
+        <div class="card mb-4 border-primary">
+          <div class="card-header bg-primary text-white">
+            <h6 class="mb-0"><i class="bi bi-receipt"></i> Ringkasan Pembayaran</h6>
+          </div>
+          <div class="card-body">
+            <div class="row align-items-center mb-3 pb-3 border-bottom">
+              <div class="col-8">
+                <p class="mb-0 text-muted">Jumlah Donasi</p>
+              </div>
+              <div class="col-4 text-end">
+                <p class="mb-0 fw-bold fs-5 text-success">Rp {{ "{:,.0f}".format(donasi.jumlah) }}</p>
+              </div>
+            </div>
+            
+            <div class="row align-items-center">
+              <div class="col-8">
+                <p class="mb-0 text-muted">Status Pembayaran</p>
+              </div>
+              <div class="col-4 text-end">
+                <span class="badge bg-warning text-dark">
+                  <i class="bi bi-hourglass-split"></i> Menunggu
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<p>Status Pembayaran:
-  <span class="badge bg-warning">Pending</span>
-</p>
+        <button id="pay-button" class="btn btn-success btn-lg w-100 mb-3">
+          <i class="bi bi-credit-card-2-front"></i> Bayar Sekarang
+        </button>
 
-<button id="pay-button" class="btn btn-primary">
-  Bayar Sekarang
-</button>
-
-<p class="mt-3">
-Pembayaran aman dilindungi oleh <b>Midtrans</b>
-</p>
+        <p class="text-center text-muted small">
+          <i class="bi bi-shield-check"></i> Pembayaran aman dilindungi oleh <strong>Midtrans</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- MIDTRANS -->
 <script src="https://app.sandbox.midtrans.com/snap/snap.js"
@@ -46,16 +104,14 @@ document.getElementById('pay-button').addEventListener('click', function () {
     .then(data => {
         snap.pay(data.snap_token, {
             onSuccess: function(result){
-                alert("Pembayaran berhasil");
-                console.log(result);
+                alert("Pembayaran berhasil! Terima kasih atas donasi Anda.");
+                window.location.href = "{{ url_for('donasi_sukses', id=donasi.id) }}";
             },
             onPending: function(result){
-                alert("Menunggu pembayaran");
-                console.log(result);
+                alert("Pembayaran sedang menunggu. Silakan selesaikan pembayaran Anda.");
             },
             onError: function(result){
-                alert("Pembayaran gagal");
-                console.log(result);
+                alert("Pembayaran gagal. Silakan coba lagi.");
             }
         });
     });

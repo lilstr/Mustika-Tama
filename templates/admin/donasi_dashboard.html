@@ -1,44 +1,73 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Dashboard Donasi</h3>
+<h3 class="mb-4">
+  <i class="bi bi-gift-fill text-primary"></i> Dashboard Donasi
+</h3>
 
-<div class="mb-3">
-  <a href="/admin/donasi" class="btn btn-secondary btn-sm">Semua</a>
-  <a href="/admin/donasi?status=paid" class="btn btn-success btn-sm">Paid</a>
-  <a href="/admin/donasi?status=pending" class="btn btn-warning btn-sm">Pending</a>
-  <a href="/admin/donasi?status=failed" class="btn btn-danger btn-sm">Failed</a>
+<div class="mb-4 d-flex gap-2 align-items-center">
+  <div>
+    <a href="/admin/donasi" class="btn btn-secondary btn-sm">
+      <i class="bi bi-list"></i> Semua
+    </a>
+    <a href="/admin/donasi?status=paid" class="btn btn-success btn-sm">
+      <i class="bi bi-check-circle"></i> Paid
+    </a>
+    <a href="/admin/donasi?status=pending" class="btn btn-warning btn-sm">
+      <i class="bi bi-hourglass-split"></i> Pending
+    </a>
+    <a href="/admin/donasi?status=failed" class="btn btn-danger btn-sm">
+      <i class="bi bi-x-circle"></i> Failed
+    </a>
+  </div>
+  <a href="{{ url_for('laporan_donasi') }}" class="btn btn-info btn-sm ms-auto">
+    <i class="bi bi-receipt"></i> Download Laporan
+  </a>
 </div>
 
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Nama</th>
-      <th>Nominal</th>
-      <th>Status</th>
-      <th>Tanggal</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for d in donasi %}
-    <tr>
-      <td>{{ loop.index }}</td>
-      <td>{{ 'Hamba Allah' if d.anonim else d.nama_donatur }}</td>
-      <td>Rp {{ "{:,.0f}".format(d.jumlah) }}</td>
-      <td>
-        {% if d.status == 'paid' %}
-          <span class="badge bg-success">Paid</span>
-        {% elif d.status == 'pending' %}
-          <span class="badge bg-warning">Pending</span>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th><i class="bi bi-person"></i> Nama</th>
+          <th><i class="bi bi-cash-coin"></i> Nominal</th>
+          <th><i class="bi bi-badge"></i> Status</th>
+          <th><i class="bi bi-calendar-event"></i> Tanggal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in donasi %}
+        <tr>
+          <td class="text-muted">{{ loop.index }}</td>
+          <td>
+            <strong>{{ 'Hamba Allah' if d.anonim else d.nama_donatur }}</strong>
+          </td>
+          <td class="fw-bold text-success">Rp {{ "{:,.0f}".format(d.jumlah) }}</td>
+          <td>
+            {% if d.status == 'paid' %}
+              <span class="badge bg-success"><i class="bi bi-check-circle"></i> Paid</span>
+            {% elif d.status == 'pending' %}
+              <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split"></i> Pending</span>
+            {% else %}
+              <span class="badge bg-danger"><i class="bi bi-x-circle"></i> Failed</span>
+            {% endif %}
+          </td>
+          <td>
+            <small class="text-muted">{{ d.created_at }}</small>
+          </td>
+        </tr>
         {% else %}
-          <span class="badge bg-danger">Failed</span>
-        {% endif %}
-      </td>
-      <td>{{ d.created_at }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+        <tr>
+          <td colspan="5" class="text-center text-muted py-4">
+            <i class="bi bi-inbox"></i> Tidak ada data donasi
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 
 {% endblock %}

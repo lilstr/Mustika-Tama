@@ -1,72 +1,138 @@
 <div class="modal fade" id="hapusModal" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <form method="POST"
           action="{{ url_for('hapus_penghuni', id=p.id) }}"
           class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title">Hapus Data Penghuni</h5>
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-circle"></i> Proses Keluar Penghuni
+        </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
+        <div class="alert alert-warning mb-3">
+          <i class="bi bi-info-circle"></i> Data penghuni akan dipindahkan ke arsip "Mantan Penghuni"
+        </div>
 
-        <label>Alasan Keluar</label>
+        <h6 class="mb-3"><i class="bi bi-question-circle"></i> Alasan Keluar</h6>
         <select name="alasan_keluar" id="alasan"
-                class="form-control mb-2" required>
-          <option value="">-- Pilih --</option>
-          <option value="meninggal">Meninggal Dunia</option>
-          <option value="diadopsi">Diadopsi</option>
-          <option value="kembali_keluarga">Kembali ke Keluarga</option>
-          <option value="pindah_panti">Pindah ke Panti Lain</option>
-          <option value="lainnya">Lainnya</option>
+                class="form-control mb-3" required>
+          <option value="">-- Pilih Alasan Keluar --</option>
+          <option value="meninggal">⚰️ Meninggal Dunia</option>
+          <option value="diadopsi">👨‍👩‍👧 Diadopsi</option>
+          <option value="kembali_keluarga">🏠 Kembali ke Keluarga</option>
+          <option value="pindah_panti">🏢 Pindah ke Panti Lain</option>
+          <option value="lainnya">📝 Lainnya</option>
         </select>
 
-        <textarea name="keterangan" class="form-control mb-2"
-          placeholder="Keterangan tambahan"></textarea>
+        <label class="form-label">Keterangan Tambahan</label>
+        <textarea name="keterangan" class="form-control mb-3"
+          placeholder="Catatan atau informasi tambahan" rows="2"></textarea>
 
-        <!-- FORM ADOPSI -->
-        <div id="formAdopsi" style="display:none;">
-          <hr>
-          <h6>Data Orang Tua Adopsi</h6>
+        <!-- FORM ADOPSI (Hidden by default) -->
+        <div id="formAdopsi" class="d-none">
+          <div class="card bg-light">
+            <div class="card-header bg-transparent">
+              <h6 class="mb-0"><i class="bi bi-heart-fill text-danger"></i> Data Orang Tua Adopsi</h6>
+            </div>
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Nama Lengkap *</label>
+                  <input name="nama_wali_adopsi" class="form-control"
+                         placeholder="Nama orang tua adopsi" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">NIK *</label>
+                  <input name="nik_wali_adopsi" class="form-control"
+                         placeholder="Nomor Induk Kependudukan" required>
+                </div>
+              </div>
 
-          <input name="nama_wali_adopsi" class="form-control mb-2"
-                 placeholder="Nama Lengkap">
+              <div class="mb-3">
+                <label class="form-label">Alamat</label>
+                <textarea name="alamat_wali" class="form-control" rows="2"
+                  placeholder="Alamat lengkap orang tua adopsi"></textarea>
+              </div>
 
-          <input name="nik_wali_adopsi" class="form-control mb-2"
-                 placeholder="NIK">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">No HP</label>
+                  <input name="no_hp_wali" class="form-control"
+                         placeholder="08123456789">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Pekerjaan</label>
+                  <input name="pekerjaan" class="form-control"
+                         placeholder="Pekerjaan/Profesi">
+                </div>
+              </div>
 
-          <textarea name="alamat_wali" class="form-control mb-2"
-            placeholder="Alamat"></textarea>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Status Pernikahan</label>
+                  <select name="status_pernikahan" class="form-control">
+                    <option value="menikah">Menikah</option>
+                    <option value="belum_menikah">Belum Menikah</option>
+                    <option value="duda_dudi">Duda/Dudi</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Tanggal Adopsi</label>
+                  <input type="date" name="tanggal_adopsi" class="form-control">
+                </div>
+              </div>
 
-          <input name="no_hp_wali" class="form-control mb-2"
-                 placeholder="No HP">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">No SK Adopsi</label>
+                  <input name="no_sk_adopsi" class="form-control"
+                         placeholder="Nomor Surat Keputusan">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Instansi Pengesah</label>
+                  <input name="instansi_pengesah" class="form-control"
+                         placeholder="Instansi yang mengesahkan">
+                </div>
+              </div>
 
-          <input name="pekerjaan" class="form-control mb-2"
-                 placeholder="Pekerjaan">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Hubungan dengan Anak</label>
+                  <select name="hubungan_dengan_anak" class="form-control">
+                    <option value="orang_tua">Orang Tua</option>
+                    <option value="keluarga">Keluarga</option>
+                    <option value="wali">Wali</option>
+                    <option value="lainnya">Lainnya</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Dokumen</label>
+                  <input name="dokumen" class="form-control"
+                         placeholder="Nama file dokumen atau deskripsi">
+                </div>
+              </div>
 
-          <select name="status_pernikahan" class="form-control mb-2">
-            <option value="menikah">Menikah</option>
-            <option value="belum_menikah">Belum Menikah</option>
-          </select>
-
-          <input type="date" name="tanggal_adopsi"
-                 class="form-control mb-2">
-
-          <input name="no_sk_adopsi" class="form-control mb-2"
-                 placeholder="No SK Adopsi">
-
-          <input name="instansi_pengesah" class="form-control mb-2"
-                 placeholder="Instansi Pengesah">
+              <div class="mb-3">
+                <label class="form-label">Catatan</label>
+                <textarea name="catatan" class="form-control" rows="2"
+                  placeholder="Catatan tambahan tentang adopsi"></textarea>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">
-          Batal
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i> Batal
         </button>
-        <button class="btn btn-danger">Simpan</button>
+        <button type="submit" class="btn btn-warning">
+          <i class="bi bi-archive"></i> Simpan & Arsipkan
+        </button>
       </div>
 
     </form>
@@ -75,7 +141,17 @@
 
 <script>
 document.getElementById('alasan').addEventListener('change', function(){
-  document.getElementById('formAdopsi').style.display =
-    this.value === 'diadopsi' ? 'block' : 'none';
+  const formAdopsi = document.getElementById('formAdopsi');
+  if (this.value === 'diadopsi') {
+    formAdopsi.classList.remove('d-none');
+    formAdopsi.querySelectorAll('input[required], textarea[required]').forEach(el => {
+      el.setAttribute('required', 'required');
+    });
+  } else {
+    formAdopsi.classList.add('d-none');
+    formAdopsi.querySelectorAll('input[required], textarea[required]').forEach(el => {
+      el.removeAttribute('required');
+    });
+  }
 });
 </script>

@@ -1,52 +1,238 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
-  <div class="col-md-8">
-    <h2>Panti Asuhan Mustika Tama Bantul</h2>
-    <p class="text-muted">
-      Lembaga Kesejahteraan Sosial Anak (LKSA)
-    </p>
 
-    <p>
-      Panti Asuhan Mustika Tama Bantul merupakan lembaga sosial yang bergerak
-      dalam bidang pengasuhan, pendidikan, dan pembinaan anak-anak yatim,
-      piatu, dan dhuafa. Panti ini berada di bawah pembinaan Dinas Sosial
-      Kabupaten Bantul dan berkomitmen menciptakan lingkungan yang aman,
-      religius, dan edukatif.
-    </p>
-
-    <h5>Visi</h5>
-    <p>
-      Terwujudnya generasi anak asuh yang mandiri, berakhlak mulia, dan
-      berdaya saing.
-    </p>
-
-    <h5>Misi</h5>
-    <ul>
-      <li>Memberikan pengasuhan yang layak dan berkelanjutan</li>
-      <li>Menyelenggarakan pendidikan formal dan non-formal</li>
-      <li>Membina karakter dan nilai keagamaan</li>
-      <li>Meningkatkan kepedulian sosial masyarakat</li>
-    </ul>
-
-    <a href="{{ url_for('daftar') }}" class="btn btn-primary mt-3">
-      Daftar Calon Penghuni
-    </a>
+<!-- HERO SECTION PROFESIONAL -->
+<div class="hero-section">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Panti Asuhan Mustika Tama
+      </h1>
+      <p class="hero-subtitle">
+        Memberikan Kasih Sayang, Pendidikan, dan Masa Depan Cerah untuk Anak-anak yang Membutuhkan
+      </p>
+      <div class="hero-buttons">
+        <a href="{{ url_for('daftar') }}" class="btn btn-hero btn-hero-primary">
+          <i class="bi bi-hand-thumbs-up me-2"></i>Daftar Sekarang
+        </a>
+        <a href="{{ url_for('donasi') }}" class="btn btn-hero btn-hero-secondary">
+          <i class="bi bi-heart-fill me-2"></i>Berdonasi
+        </a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="{{ url_for('static', filename='uploads/pic1.jpg') }}" alt="Hero Image" class="hero-image-content">
+    </div>
   </div>
+</div>
 
-  <div class="col-md-4">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h6 class="card-title">Informasi Singkat</h6>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">📍 Bantul, DI Yogyakarta</li>
-          <li class="list-group-item">👶 Anak Asuh: ±30</li>
-          <li class="list-group-item">🏫 Pendidikan Formal</li>
-          <li class="list-group-item">🤝 Terbuka Donasi</li>
-        </ul>
+<!-- STATS SECTION -->
+<div class="stats-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="stat-box">
+          <div class="stat-icon">
+            <i class="bi bi-person-badge"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number">±30</h3>
+            <p class="stat-label">Anak Asuh</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-box">
+          <div class="stat-icon">
+            <i class="bi bi-building"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number">20+</h3>
+            <p class="stat-label">Tahun Berdiri</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-box">
+          <div class="stat-icon">
+            <i class="bi bi-heart"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number">100%</h3>
+            <p class="stat-label">Dedikasi</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="container">
+  <!-- TENTANG SECTION -->
+  <section class="about-section">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="about-content">
+          <span class="section-label">Tentang Kami</span>
+          <h2 class="section-title">Komitmen untuk Masa Depan Cerah</h2>
+          <p class="section-text">
+            Panti Asuhan Mustika Tama Bantul merupakan lembaga sosial yang bergerak dalam bidang pengasuhan, pendidikan, dan pembinaan anak-anak yatim, piatu, dan dhuafa. Kami berkomitmen menciptakan lingkungan yang aman, religius, dan edukatif untuk setiap anak.
+          </p>
+          <div class="about-highlights">
+            <div class="highlight-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>Pendidikan Berkualitas</span>
+            </div>
+            <div class="highlight-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>Pembinaan Karakter</span>
+            </div>
+            <div class="highlight-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>Dukungan Emosional</span>
+            </div>
+            <div class="highlight-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>Fasilitas Lengkap</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="about-image">
+          <img src="{{ url_for('static', filename='uploads/pic2.jpeg') }}" alt="Foto Kegiatan Panti" class="about-image-content">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISI MISI SECTION -->
+  <section class="visi-misi-section">
+    <h2 class="section-title-center">Visi & Misi Kami</h2>
+    <div class="row g-4 mt-4">
+      <div class="col-md-6">
+        <div class="visi-misi-card visi-card">
+          <div class="visi-misi-icon">
+            <i class="bi bi-telescope"></i>
+          </div>
+          <h3>Visi</h3>
+          <p>
+            Menjadi lembaga sosial yang berdaya, mandiri, dan berakhlak mulia dalam membina anak yatim dan dhuafa menuju generasi yang beriman, berilmu, dan berkarakter.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="visi-misi-card misi-card">
+          <div class="visi-misi-icon">
+            <i class="bi bi-bullseye"></i>
+          </div>
+          <h3>Misi</h3>
+          <ul class="misi-list">
+            <li><i class="bi bi-arrow-right"></i> Menyediakan tempat tinggal yang layak, aman, dan penuh kasih bagi anak-anak asuh.</li>
+            <li><i class="bi bi-arrow-right"></i> Menyelenggarakan pendidikan formal dan non-formal untuk membangun kemandirian.</li>
+            <li><i class="bi bi-arrow-right"></i> Menanamkan nilai-nilai keislaman, disiplin, dan tanggung jawab.</li>
+            <li><i class="bi bi-arrow-right"></i> Membangun jejaring kerja sama dengan masyarakat, lembaga pendidikan, dan instansi sosial.</li>
+            <li><i class="bi bi-arrow-right"></i> Menjadi wadah bagi masyarakat untuk menyalurkan kepedulian dan donasi secara transparan.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM SECTION -->
+  <section class="program-section">
+    <h2 class="section-title-center">Program Unggulan Kami</h2>
+    <div class="row g-4 mt-5">
+      <div class="col-md-6 col-lg-3">
+        <div class="program-card">
+          <div class="program-icon program-icon-1">
+            <i class="bi bi-book"></i>
+          </div>
+          <h4>Pendidikan Formal</h4>
+          <p>Mendukung pendidikan SD hingga SMA dengan program bimbingan belajar intensif</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="program-card">
+          <div class="program-icon program-icon-2">
+            <i class="bi bi-heart"></i>
+          </div>
+          <h4>Pembinaan Karakter</h4>
+          <p>Program akhlak dan moral untuk membentuk kepribadian yang positif</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="program-card">
+          <div class="program-icon program-icon-3">
+            <i class="bi bi-music-note-beamed"></i>
+          </div>
+          <h4>Seni & Olahraga</h4>
+          <p>Mengembangkan bakat melalui aktivitas seni, musik, dan olahraga</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="program-card">
+          <div class="program-icon program-icon-4">
+            <i class="bi bi-graph-up"></i>
+          </div>
+          <h4>Pelatihan Keterampilan</h4>
+          <p>Mempersiapkan keterampilan kerja untuk masa depan yang mandiri</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEGIATAN SECTION -->
+  <section class="activities-section">
+    <h2 class="section-title-center">Kegiatan Kami</h2>
+    <div class="row g-4 mt-5">
+      <div class="col-md-4">
+        <div class="activity-card-large">
+          <div class="activity-icon">
+            <i class="bi bi-calendar-event"></i>
+          </div>
+          <h4>Kegiatan Harian</h4>
+          <p>Rutinitas harian mencakup belajar, bermain, olahraga, dan kegiatan keagamaan untuk pengembangan holistik</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="activity-card-large">
+          <div class="activity-icon">
+            <i class="bi bi-cup"></i>
+          </div>
+          <h4>Kompetisi & Lomba</h4>
+          <p>Kami mendukung partisipasi anak-anak dalam berbagai kompetisi akademik dan non-akademik</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="activity-card-large">
+          <div class="activity-icon">
+            <i class="bi bi-globe"></i>
+          </div>
+          <h4>Program Sosial</h4>
+          <p>Kegiatan gotong royong dan pengabdian masyarakat untuk menumbuhkan jiwa sosial</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Mari Berbagi Kebaikan</h2>
+      <p>Setiap kontribusi Anda adalah berkah bagi masa depan anak-anak kami. Bersama kita ciptakan perubahan positif.</p>
+      <div class="cta-buttons">
+        <a href="{{ url_for('donasi') }}" class="btn btn-cta btn-cta-primary">
+          <i class="bi bi-heart-fill me-2"></i>Donasi Sekarang
+        </a>
+        <a href="{{ url_for('kegiatan') }}" class="btn btn-cta btn-cta-secondary">
+          <i class="bi bi-arrow-right me-2"></i>Pelajari Lebih Lanjut
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
 {% endblock %}
+

@@ -1,69 +1,169 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Detail Pendaftaran</h3>
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+          <i class="bi bi-file-earmark-person"></i> Detail Pendaftaran
+        </h4>
+      </div>
 
-<div class="row">
-  <div class="col-md-4">
-    {% if p.foto %}
-      <img src="{{ url_for('static', filename='uploads/' + p.foto) }}"
-           class="img-thumbnail">
-    {% else %}
-      <img src="{{ url_for('static', filename='no-photo.png') }}"
-           class="img-thumbnail">
-    {% endif %}
+      <div class="card-body">
+        <div class="row mb-4">
+          <!-- FOTO -->
+          <div class="col-md-3">
+            <div class="card border-light">
+              <div class="card-body text-center">
+                {% if p.foto %}
+                  <img src="{{ url_for('static', filename='uploads/' + p.foto) }}"
+                       class="img-fluid rounded"
+                       style="max-height: 250px; object-fit: cover;">
+                {% else %}
+                  <div class="bg-light rounded p-5">
+                    <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <!-- DATA PRIBADI -->
+          <div class="col-md-9">
+            <h6 class="mb-3 pb-2 border-bottom">
+              <i class="bi bi-person"></i> Data Pribadi
+            </h6>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="text-muted small">NIK</label>
+                <p class="fw-bold">{{ p.nik }}</p>
+              </div>
+              <div class="col-6">
+                <label class="text-muted small">Nama Lengkap</label>
+                <p class="fw-bold">{{ p.nama_anak }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="text-muted small">Jenis Kelamin</label>
+                <p class="fw-bold">
+                  {% if p.jenis_kelamin == 'L' %}
+                    <i class="bi bi-person"></i> Laki-laki
+                  {% else %}
+                    <i class="bi bi-person-fill"></i> Perempuan
+                  {% endif %}
+                </p>
+              </div>
+              <div class="col-6">
+                <label class="text-muted small">Tanggal Lahir</label>
+                <p class="fw-bold">{{ p.tanggal_lahir }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="text-muted small">Usia</label>
+                <p class="fw-bold">{{ p.usia }} tahun</p>
+              </div>
+              <div class="col-6">
+                <label class="text-muted small">Pendidikan</label>
+                <p class="fw-bold">{{ p.pendidikan }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="text-muted small">Asal</label>
+                <p class="fw-bold">{{ p.asal }}</p>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="text-muted small">Alamat</label>
+              <p class="fw-bold">{{ p.alamat }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- INFO WALI & KEBUTUHAN -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="card bg-light">
+              <div class="card-header bg-transparent">
+                <h6 class="mb-0"><i class="bi bi-shield-person"></i> Informasi Wali</h6>
+              </div>
+              <div class="card-body">
+                <label class="text-muted small">Nama Wali</label>
+                <p class="fw-bold mb-3">{{ p.nama_wali }}</p>
+                <label class="text-muted small">No HP</label>
+                <p class="fw-bold">{{ p.no_hp }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card bg-light">
+              <div class="card-header bg-transparent">
+                <h6 class="mb-0"><i class="bi bi-heart-pulse"></i> Kebutuhan Khusus</h6>
+              </div>
+              <div class="card-body">
+                <label class="text-muted small">Status</label>
+                <p class="fw-bold mb-3">
+                  {% if p.berkebutuhan_khusus == 'ya' %}
+                    <span class="badge bg-warning text-dark">Ya</span>
+                  {% else %}
+                    <span class="badge bg-success">Tidak Ada</span>
+                  {% endif %}
+                </p>
+                {% if p.berkebutuhan_khusus == 'ya' %}
+                  <label class="text-muted small">Detail Treatment</label>
+                  <p class="fw-bold">{{ p.treatment_khusus }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ALASAN MASUK -->
+        <div class="card bg-light mb-4">
+          <div class="card-header bg-transparent">
+            <h6 class="mb-0"><i class="bi bi-chat-left-quote"></i> Alasan Masuk Panti</h6>
+          </div>
+          <div class="card-body">
+            <p class="fw-bold">{{ p.alasan }}</p>
+          </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="d-flex gap-2 flex-wrap">
+          <!-- SETUJUI -->
+          <form method="POST"
+                action="{{ url_for('setujui_pendaftaran', id=p.id) }}">
+            <button type="submit" class="btn btn-success"
+                    onclick="return confirm('Setujui pendaftaran ini?')">
+              <i class="bi bi-check-lg"></i> Setujui Pendaftaran
+            </button>
+          </form>
+
+          <!-- TOLAK -->
+          <button class="btn btn-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#tolakModal">
+            <i class="bi bi-x-lg"></i> Tolak Pendaftaran
+          </button>
+
+          <!-- KEMBALI -->
+          <a href="{{ url_for('admin_pendaftaran') }}"
+             class="btn btn-secondary">
+             <i class="bi bi-arrow-left"></i> Kembali
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="col-md-8">
-    <table class="table table-sm table-bordered">
-      <tr><th>NIK</th><td>{{ p.nik }}</td></tr>
-      <tr><th>Nama</th><td>{{ p.nama_anak }}</td></tr>
-      <tr><th>Jenis Kelamin</th><td>{{ p.jenis_kelamin }}</td></tr>
-      <tr><th>Tgl Lahir</th><td>{{ p.tanggal_lahir }}</td></tr>
-      <tr><th>Usia</th><td>{{ p.usia }}</td></tr>
-      <tr><th>Asal</th><td>{{ p.asal }}</td></tr>
-      <tr><th>Pendidikan</th><td>{{ p.pendidikan }}</td></tr>
-      <tr><th>Alamat</th><td>{{ p.alamat }}</td></tr>
-      <tr>
-        <th>Berkebutuhan Khusus</th>
-        <td>
-          {% if p.berkebutuhan_khusus == 'ya' %}
-            Ya<br>
-            <small class="text-muted">{{ p.treatment_khusus }}</small>
-          {% else %}
-            Tidak
-          {% endif %}
-        </td>
-      </tr>
-      <tr><th>Nama Wali</th><td>{{ p.nama_wali }}</td></tr>
-      <tr><th>No HP</th><td>{{ p.no_hp }}</td></tr>
-    </table>
-  </div>
-</div>
-
-<hr>
-
-<div class="d-flex gap-2">
-  <!-- SETUJUI -->
-  <form method="POST"
-        action="{{ url_for('setujui_pendaftaran', id=p.id) }}">
-    <button class="btn btn-success"
-            onclick="return confirm('Setujui pendaftaran ini?')">
-      ✔ Setujui
-    </button>
-  </form>
-
-  <!-- TOLAK -->
-  <button class="btn btn-danger"
-          data-bs-toggle="modal"
-          data-bs-target="#tolakModal">
-    ✖ Tolak
-  </button>
-
-  <a href="{{ url_for('admin_pendaftaran') }}"
-     class="btn btn-secondary">
-     Kembali
-  </a>
 </div>
 
 {% include 'admin/modal_tolak_pendaftaran.html' %}

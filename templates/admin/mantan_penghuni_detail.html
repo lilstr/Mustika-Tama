@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card">
+      <div class="card-header bg-secondary text-white">
+        <h4 class="mb-0">
+          <i class="bi bi-archive"></i> Detail Mantan Penghuni
+        </h4>
+      </div>
+
+      <div class="card-body">
+        <!-- ALASAN KELUAR & TANGGAL -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="card bg-light">
+              <div class="card-body">
+                <label class="text-muted small">Alasan Keluar</label>
+                <p class="fw-bold fs-5">
+                  {% if m.alasan_keluar == 'meninggal' %}
+                    <span class="badge bg-dark"><i class="bi bi-dash-circle"></i> Meninggal Dunia</span>
+                  {% elif m.alasan_keluar == 'diadopsi' %}
+                    <span class="badge bg-success"><i class="bi bi-heart-fill"></i> Diadopsi</span>
+                  {% elif m.alasan_keluar == 'kembali_keluarga' %}
+                    <span class="badge bg-warning text-dark"><i class="bi bi-house-heart"></i> Kembali ke Keluarga</span>
+                  {% elif m.alasan_keluar == 'pindah_panti' %}
+                    <span class="badge bg-info"><i class="bi bi-building"></i> Pindah ke Panti Lain</span>
+                  {% else %}
+                    <span class="badge bg-secondary"><i class="bi bi-question-circle"></i> {{ m.alasan_keluar }}</span>
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card bg-light">
+              <div class="card-body">
+                <label class="text-muted small">Tanggal Keluar</label>
+                <p class="fw-bold fs-5">
+                  {{ m.tanggal_keluar }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- FOTO & DATA PRIBADI -->
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <div class="card border-light">
+              <div class="card-body text-center">
+                {% if m.foto %}
+                  <img src="{{ url_for('static', filename='uploads/' ~ m.foto) }}"
+                       class="img-fluid rounded"
+                       style="max-height: 250px; object-fit: cover;">
+                {% else %}
+                  <div class="bg-light rounded p-5">
+                    <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-9">
+            <h6 class="mb-3 pb-2 border-bottom">
+              <i class="bi bi-person"></i> Data Pribadi
+            </h6>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="text-muted small">NIK</label>
+                <p class="fw-bold">{{ m.nik }}</p>
+              </div>
+              <div class="col-6">
+                <label class="text-muted small">Nama Lengkap</label>
+                <p class="fw-bold">{{ m.nama_anak }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="text-muted small">Jenis Kelamin</label>
+                <p class="fw-bold">
+                  {% if m.jenis_kelamin == 'L' %}
+                    <i class="bi bi-person"></i> Laki-laki
+                  {% else %}
+                    <i class="bi bi-person-fill"></i> Perempuan
+                  {% endif %}
+                </p>
+              </div>
+              <div class="col-6">
+                <label class="text-muted small">Tanggal Lahir</label>
+                <p class="fw-bold">{{ m.tanggal_lahir }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="text-muted small">Usia Saat Keluar</label>
+                <p class="fw-bold">{{ m.usia }} tahun</p>
+              </div>
+              <div class="col-6">
+                <label class="text-muted small">Pendidikan</label>
+                <p class="fw-bold">{{ m.pendidikan or '-' }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="text-muted small">Asal</label>
+                <p class="fw-bold">{{ m.asal }}</p>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="text-muted small">Alamat</label>
+              <p class="fw-bold">{{ m.alamat }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- INFO WALI & KEBUTUHAN -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="card bg-light">
+              <div class="card-header bg-transparent">
+                <h6 class="mb-0"><i class="bi bi-shield-person"></i> Informasi Wali</h6>
+              </div>
+              <div class="card-body">
+                <label class="text-muted small">Nama Wali</label>
+                <p class="fw-bold mb-3">{{ m.nama_wali or '-' }}</p>
+                <label class="text-muted small">No HP</label>
+                <p class="fw-bold">{{ m.no_hp or '-' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card bg-light">
+              <div class="card-header bg-transparent">
+                <h6 class="mb-0"><i class="bi bi-heart-pulse"></i> Kebutuhan Khusus</h6>
+              </div>
+              <div class="card-body">
+                <label class="text-muted small">Status</label>
+                <p class="fw-bold mb-3">
+                  {% if m.berkebutuhan_khusus == 'ya' %}
+                    <span class="badge bg-warning text-dark">Ya</span>
+                  {% else %}
+                    <span class="badge bg-success">Tidak Ada</span>
+                  {% endif %}
+                </p>
+                {% if m.berkebutuhan_khusus == 'ya' %}
+                  <label class="text-muted small">Detail Treatment</label>
+                  <p class="fw-bold">{{ m.treatment_khusus }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KETERANGAN KELUAR -->
+        {% if m.keterangan %}
+        <div class="card bg-light">
+          <div class="card-header bg-transparent">
+            <h6 class="mb-0"><i class="bi bi-chat-left-quote"></i> Keterangan</h6>
+          </div>
+          <div class="card-body">
+            <p class="fw-bold">{{ m.keterangan }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- ADOPTION DETAILS -->
+        {% if m.alasan_keluar == 'diadopsi' and m.nama_wali_adopsi %}
+        <div class="card bg-light border-success mt-4">
+          <div class="card-header bg-success text-white">
+            <h6 class="mb-0"><i class="bi bi-heart-fill"></i> Data Orang Tua Adopsi</h6>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="text-muted small">Nama Orang Tua Adopsi</label>
+                <p class="fw-bold">{{ m.nama_wali_adopsi }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="text-muted small">NIK</label>
+                <p class="fw-bold">{{ m.nik_wali_adopsi }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="text-muted small">No HP</label>
+                <p class="fw-bold">{{ m.no_hp_wali }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="text-muted small">Pekerjaan</label>
+                <p class="fw-bold">{{ m.pekerjaan }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="text-muted small">Status Pernikahan</label>
+                <p class="fw-bold">{{ m.status_pernikahan }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="text-muted small">Tanggal Adopsi</label>
+                <p class="fw-bold">{{ m.tanggal_adopsi }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="text-muted small">No SK Adopsi</label>
+                <p class="fw-bold">{{ m.no_sk_adopsi }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="text-muted small">Instansi Pengesah</label>
+                <p class="fw-bold">{{ m.instansi_pengesah }}</p>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="text-muted small">Alamat Orang Tua Adopsi</label>
+              <p class="fw-bold">{{ m.alamat_wali }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- ACTION BUTTONS -->
+        <div class="d-flex gap-2 mt-4 flex-wrap">
+          <a href="{{ url_for('mantan_penghuni') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Kembali
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

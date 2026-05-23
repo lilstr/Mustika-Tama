@@ -1,132 +1,204 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Edit Data Penghuni</h3>
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+          <i class="bi bi-pencil-square"></i> Edit Data Penghuni
+        </h4>
+      </div>
 
-<form method="POST"
-      enctype="multipart/form-data"
-      onsubmit="return confirm('⚠️ Yakin ingin menyimpan perubahan data penghuni ini?');">
+      <div class="card-body">
+        <form method="POST"
+              enctype="multipart/form-data"
+              onsubmit="return confirm('⚠️ Yakin ingin menyimpan perubahan data penghuni ini?');">
 
-  <!-- NIK -->
-  <label>NIK</label>
-  <input class="form-control mb-2"
-         name="nik"
-         value="{{ p.nik }}"
-         required>
+          <!-- FOTO SECTION -->
+          <div class="row mb-4">
+            <div class="col-md-4">
+              <div class="card border-light">
+                <div class="card-body text-center">
+                  {% if p.foto %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ p.foto) }}"
+                         class="img-fluid rounded mb-3"
+                         style="max-height: 200px; object-fit: cover;">
+                  {% else %}
+                    <div class="bg-light rounded p-5 mb-3">
+                      <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                    </div>
+                  {% endif %}
+                  <label class="form-label"><i class="bi bi-image"></i> Ganti Foto (opsional)</label>
+                  <input type="file"
+                         name="foto"
+                         class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
 
-  <!-- Nama -->
-  <label>Nama Anak</label>
-  <input class="form-control mb-2"
-         name="nama_anak"
-         value="{{ p.nama_anak }}"
-         required>
+            <!-- DATA PRIBADI SECTION -->
+            <div class="col-md-8">
+              <h6 class="mb-3 pb-2 border-bottom">
+                <i class="bi bi-person"></i> Data Pribadi
+              </h6>
 
-  <!-- Jenis Kelamin -->
-  <label>Jenis Kelamin</label>
-  <select name="jenis_kelamin" class="form-control mb-2" required>
-    <option value="L"
-      {% if p.jenis_kelamin == 'Laki-laki' %}selected{% endif %}>
-      Laki-laki
-    </option>
-    <option value="P"
-      {% if p.jenis_kelamin == 'Perempuan' %}selected{% endif %}>
-      Perempuan
-    </option>
-  </select>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">NIK *</label>
+                  <input class="form-control"
+                         name="nik"
+                         value="{{ p.nik }}"
+                         required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Nama Anak *</label>
+                  <input class="form-control"
+                         name="nama_anak"
+                         value="{{ p.nama_anak }}"
+                         required>
+                </div>
+              </div>
 
-  <!-- Tanggal Lahir -->
-  <label>Tanggal Lahir</label>
-  <input type="date"
-         name="tanggal_lahir"
-         class="form-control mb-2"
-         value="{{ p.tanggal_lahir }}">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Jenis Kelamin *</label>
+                  <select name="jenis_kelamin" class="form-control" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="L"
+                      {% if p.jenis_kelamin == 'L' %}selected{% endif %}>
+                      Laki-laki
+                    </option>
+                    <option value="P"
+                      {% if p.jenis_kelamin == 'P' %}selected{% endif %}>
+                      Perempuan
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Tanggal Lahir</label>
+                  <input type="date"
+                         name="tanggal_lahir"
+                         class="form-control"
+                         value="{{ p.tanggal_lahir }}">
+                </div>
+              </div>
 
-  <!-- Usia -->
-  <label>Usia</label>
-  <input name="usia"
-         type="number"
-         class="form-control mb-2"
-         value="{{ p.usia }}">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Usia</label>
+                  <input name="usia"
+                         type="number"
+                         class="form-control"
+                         value="{{ p.usia }}">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Pendidikan</label>
+                  <input name="pendidikan"
+                         class="form-control"
+                         value="{{ p.pendidikan }}">
+                </div>
+              </div>
 
-  <!-- Asal -->
-  <label>Asal</label>
-  <input name="asal"
-         class="form-control mb-2"
-         value="{{ p.asal }}">
+              <div class="mb-3">
+                <label class="form-label">Asal</label>
+                <input name="asal"
+                       class="form-control"
+                       value="{{ p.asal }}">
+              </div>
 
-  <!-- Pendidikan -->
-  <label>Pendidikan</label>
-  <input name="pendidikan"
-         class="form-control mb-2"
-         value="{{ p.pendidikan }}">
+              <div class="mb-3">
+                <label class="form-label">Alamat</label>
+                <textarea name="alamat"
+                          class="form-control"
+                          rows="2">{{ p.alamat }}</textarea>
+              </div>
+            </div>
+          </div>
 
-  <!-- Alamat -->
-  <label>Alamat</label>
-  <textarea name="alamat"
-            class="form-control mb-2">{{ p.alamat }}</textarea>
+          <!-- INFORMASI WALI -->
+          <div class="card bg-light mb-4">
+            <div class="card-header bg-transparent">
+              <h6 class="mb-0"><i class="bi bi-shield-person"></i> Informasi Wali</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Nama Wali</label>
+                  <input name="nama_wali"
+                         class="form-control"
+                         value="{{ p.nama_wali }}">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">No HP</label>
+                  <input name="no_hp"
+                         class="form-control"
+                         value="{{ p.no_hp }}">
+                </div>
+              </div>
+            </div>
+          </div>
 
-  <!-- Berkebutuhan Khusus -->
-  <label>Berkebutuhan Khusus</label>
-  <select name="berkebutuhan_khusus"
-          id="bk"
-          class="form-control mb-2">
-    <option value="tidak"
-      {% if p.berkebutuhan_khusus == 'tidak' %}selected{% endif %}>
-      Tidak
-    </option>
-    <option value="ya"
-      {% if p.berkebutuhan_khusus == 'ya' %}selected{% endif %}>
-      Ya
-    </option>
-  </select>
+          <!-- KEBUTUHAN KHUSUS -->
+          <div class="card bg-light mb-4">
+            <div class="card-header bg-transparent">
+              <h6 class="mb-0"><i class="bi bi-heart-pulse"></i> Kebutuhan Khusus</h6>
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label class="form-label">Berkebutuhan Khusus</label>
+                <select name="berkebutuhan_khusus"
+                        id="bk"
+                        class="form-control">
+                  <option value="tidak"
+                    {% if p.berkebutuhan_khusus == 'tidak' %}selected{% endif %}>
+                    Tidak
+                  </option>
+                  <option value="ya"
+                    {% if p.berkebutuhan_khusus == 'ya' %}selected{% endif %}>
+                    Ya
+                  </option>
+                </select>
+              </div>
 
-  <!-- Treatment Khusus -->
-  <textarea name="treatment_khusus"
-            id="treatment"
-            class="form-control mb-2 {% if p.berkebutuhan_khusus != 'ya' %}d-none{% endif %}"
-            placeholder="Isi treatment khusus">{{ p.treatment_khusus }}</textarea>
+              <div>
+                <label class="form-label">Treatment Khusus</label>
+                <textarea name="treatment_khusus"
+                          id="treatment"
+                          class="form-control {% if p.berkebutuhan_khusus != 'ya' %}d-none{% endif %}"
+                          rows="3"
+                          placeholder="Isi treatment khusus">{{ p.treatment_khusus }}</textarea>
+              </div>
+            </div>
+          </div>
 
-  <!-- Nama Wali -->
-  <label>Nama Wali</label>
-  <input name="nama_wali"
-         class="form-control mb-2"
-         value="{{ p.nama_wali }}">
+          <!-- ALASAN MASUK -->
+          <div class="card bg-light mb-4">
+            <div class="card-header bg-transparent">
+              <h6 class="mb-0"><i class="bi bi-chat-left-quote"></i> Alasan Masuk Panti</h6>
+            </div>
+            <div class="card-body">
+              <textarea name="alasan"
+                        class="form-control"
+                        rows="3">{{ p.alasan }}</textarea>
+            </div>
+          </div>
 
-  <!-- No HP -->
-  <label>No HP</label>
-  <input name="no_hp"
-         class="form-control mb-2"
-         value="{{ p.no_hp }}">
-
-  <!-- Alasan -->
-  <label>Alasan Masuk Panti</label>
-  <textarea name="alasan"
-            class="form-control mb-2">{{ p.alasan }}</textarea>
-
-  <!-- Foto Lama -->
-  {% if p.foto %}
-    <label>Foto Saat Ini</label><br>
-    <img src="{{ url_for('static', filename='uploads/' ~ p.foto) }}"
-         width="120"
-         class="mb-2 rounded"><br>
-  {% endif %}
-
-  <!-- Upload Foto Baru -->
-  <label>Ganti Foto (opsional)</label>
-  <input type="file"
-         name="foto"
-         class="form-control mb-3">
-
-  <button class="btn btn-primary">
-    💾 Simpan Perubahan
-  </button>
-
-  <a href="{{ url_for('penghuni_detail', id=p.id) }}"
-     class="btn btn-secondary">
-    Batal
-  </a>
-
-</form>
+          <!-- BUTTONS -->
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">
+              <i class="bi bi-check-lg"></i> Simpan Perubahan
+            </button>
+            <a href="{{ url_for('penghuni_detail', id=p.id) }}"
+               class="btn btn-secondary">
+              <i class="bi bi-x-lg"></i> Batal
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 document.getElementById('bk').addEventListener('change', function () {

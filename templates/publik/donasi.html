@@ -1,46 +1,264 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Donasi Panti Asuhan Mustika Tama</h3>
-
-<form method="POST" action="{{ url_for('donasi') }}">
-
-  <label>Nama Lengkap</label>
-  <input type="text" name="nama_donatur" class="form-control">
-
-  <div class="form-check mt-2">
-    <input type="checkbox" name="anonim" value="1" id="anonimCheck">
-    <label for="anonimCheck">Donasi sebagai Hamba Allah</label>
+<div class="row justify-content-center mb-4">
+  <div class="col-lg-10">
+    <div class="banner-card p-4 rounded-4 shadow-sm text-white overflow-hidden position-relative">
+      <div class="banner-chip mb-3">Donasi Aman & Tepat</div>
+      <div class="d-flex flex-column flex-md-row align-items-start justify-content-between gap-4">
+        <div>
+          <h2 class="mb-3">Donasi untuk Masa Depan Anak-anak</h2>
+          <p class="lead mb-4">Dukung pendidikan, kesehatan, dan kebutuhan sehari-hari mereka dengan proses donasi yang jelas, aman, dan cepat.</p>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="banner-pill"><i class="bi bi-check-circle-fill"></i> Transparan</span>
+            <span class="banner-pill"><i class="bi bi-shield-lock-fill"></i> Terverifikasi</span>
+            <span class="banner-pill"><i class="bi bi-heart-fill"></i> Berdampak</span>
+          </div>
+        </div>
+        <div class="banner-icon d-none d-md-flex align-items-center justify-content-center">
+          <i class="bi bi-gem fs-1"></i>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <label class="mt-2">Kota</label>
-  <input type="text" name="kota" class="form-control">
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-header text-center">
+        <h3 class="mb-0">
+          <i class="bi bi-heart-fill text-danger"></i> Formulir Donasi
+        </h3>
+        <p class="text-muted small mt-2 mb-0">Terima kasih atas kepedulian Anda kepada anak-anak kami</p>
+      </div>
 
-  <label class="mt-2">Nomor WhatsApp</label>
-  <input type="text" name="no_hp" class="form-control">
+      <div class="card-body">
+        <form method="POST" action="{{ url_for('donasi') }}">
 
-  <label class="mt-2">Email</label>
-  <input type="email" name="email" class="form-control">
+          <!-- DATA DONATUR -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-person"></i> Nama Lengkap
+            </label>
+            <input type="text" name="nama_donatur" class="form-control" 
+                   placeholder="Masukkan nama Anda" required>
+          </div>
 
-  <label class="mt-2">Nominal Donasi</label>
-  <input type="number" id="nominal" name="jumlah" class="form-control">
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" name="anonim" value="1" id="anonimCheck" class="form-check-input">
+              <label class="form-check-label" for="anonimCheck">
+                <i class="bi bi-shield-lock"></i> Donasi sebagai Hamba Allah (Anonim)
+              </label>
+            </div>
+          </div>
 
-  <div class="mt-2">
-    <button type="button" onclick="setNominal(10000)">Rp 10.000</button>
-    <button type="button" onclick="setNominal(20000)">Rp 20.000</button>
-    <button type="button" onclick="setNominal(50000)">Rp 50.000</button>
-    <button type="button" onclick="setNominal(100000)">Rp 100.000</button>
+          <!-- LOKASI & KONTAK -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="bi bi-geo-alt"></i> Kota
+                </label>
+                <input type="text" name="kota" class="form-control" 
+                       placeholder="Kota asal Anda">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="bi bi-whatsapp"></i> Nomor WhatsApp
+                </label>
+                <input type="text" name="no_hp" class="form-control" 
+                       placeholder="08xxxxxxxxxx">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-envelope"></i> Email
+            </label>
+            <input type="email" name="email" class="form-control" 
+                   placeholder="email@example.com">
+          </div>
+
+          <!-- NOMINAL DONASI -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-cash-coin"></i> Nominal Donasi <span class="text-danger">*</span>
+            </label>
+            <input type="number" id="nominal" name="jumlah" class="form-control form-control-lg" 
+                   placeholder="Masukkan jumlah donasi" required>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-6">
+              <button type="button" class="btn btn-outline-primary w-100 btn-sm"
+                      onclick="setNominal(10000)">
+                Rp 10.000
+              </button>
+            </div>
+            <div class="col-6">
+              <button type="button" class="btn btn-outline-primary w-100 btn-sm"
+                      onclick="setNominal(20000)">
+                Rp 20.000
+              </button>
+            </div>
+            <div class="col-6 mt-2">
+              <button type="button" class="btn btn-outline-primary w-100 btn-sm"
+                      onclick="setNominal(50000)">
+                Rp 50.000
+              </button>
+            </div>
+            <div class="col-6 mt-2">
+              <button type="button" class="btn btn-outline-primary w-100 btn-sm"
+                      onclick="setNominal(100000)">
+                Rp 100.000
+              </button>
+            </div>
+          </div>
+
+          <!-- DUA DAN HARAPAN -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-chat-heart"></i> Do'a dan Harapan
+            </label>
+            <textarea name="doa" class="form-control" rows="3"
+                      placeholder="Tuliskan do'a dan harapan Anda untuk anak-anak kami..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-success btn-lg w-100 mt-4">
+            <i class="bi bi-heart-fill"></i> Lanjutkan ke Pembayaran
+          </button>
+        </form>
+
+        <div class="alert alert-info mt-4 mb-0">
+          <i class="bi bi-shield-check"></i>
+          <div>
+            <strong>Pembayaran Aman</strong>
+            <p class="small mb-0">Kami menggunakan sistem pembayaran Midtrans yang aman dan terpercaya untuk melindungi data Anda.</p>
+          </div>
+        </div>
+
+        {% if recent_donatur %}
+        <div class="card mt-4">
+          <div class="card-header">
+            <h5 class="mb-0">Donatur Terakhir</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nama</th>
+                    <th>Kota</th>
+                    <th>Jumlah</th>
+                    <th>Tanggal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in recent_donatur %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ 'Anonim' if item.anonim else item.nama_donatur }}</td>
+                    <td>{{ item.kota or '-' }}</td>
+                    <td>Rp {{ '{:,.0f}'.format(item.jumlah) }}</td>
+                    <td>{{ item.created_at.strftime('%d-%m-%Y') if item.created_at else '-' }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if testimonial_donatur %}
+        <div class="card mt-4">
+          <div class="card-header">
+            <h5 class="mb-0">Testimoni Donatur</h5>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              {% for item in testimonial_donatur %}
+              <div class="col-md-6">
+                <div class="testimonial-card p-3 rounded-3 border">
+                  <p class="text-muted small mb-2">{{ item.created_at.strftime('%d %b %Y') if item.created_at else '-' }} • {{ item.kota or '-' }}</p>
+                  <p class="mb-3">&ldquo;{{ item.doa }}&rdquo;</p>
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-person-circle fs-4 text-primary"></i>
+                    <div>
+                      <strong>{{ 'Anonim' if item.anonim else item.nama_donatur }}</strong>
+                      <div class="small text-muted">Donatur</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
   </div>
-
-  <label class="mt-2">Do'a dan Harapan</label>
-  <textarea name="doa" class="form-control"></textarea>
-
-  <button class="btn btn-success mt-3">Lanjutkan</button>
-</form>
+  <div class="col-lg-4">
+    <div class="card donation-summary-card sticky-top">
+      <div class="card-header">
+        <h5 class="mb-0">Ringkasan Donasi</h5>
+      </div>
+      <div class="card-body">
+        <div class="donation-metrics d-flex flex-wrap gap-3 mb-4">
+          <div class="metric-box">
+            <span>Total Donatur</span>
+            <strong>{{ total_donatur }}</strong>
+          </div>
+          <div class="metric-box">
+            <span>Total Dana Dibayar</span>
+            <strong>Rp {{ '{:,.0f}'.format(total_donasi or 0) }}</strong>
+          </div>
+        </div>
+        <p class="text-muted small mb-4">Dukungan Anda langsung membantu anak-anak Panti Asuhan Mustika Tama.</p>
+        <div class="support-feature">
+          <i class="bi bi-award"></i>
+          <div>
+            <strong>Prioritas Pendidikan</strong>
+            Bantuan diprioritaskan untuk kebutuhan sekolah, buku, dan perlengkapan belajar.
+          </div>
+        </div>
+        <div class="support-feature">
+          <i class="bi bi-basket3"></i>
+          <div>
+            <strong>Kebutuhan Harian</strong>
+            Makanan, sanitasi, dan perawatan kesehatan rutin terjamin.
+          </div>
+        </div>
+        <div class="support-feature">
+          <i class="bi bi-shield-check"></i>
+          <div>
+            <strong>Pembayaran Aman</strong>
+            Transaksi melalui Midtrans dengan proteksi data dan konfirmasi resmi.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 function setNominal(val){
   document.getElementById('nominal').value = val;
+  document.getElementById('nominal').focus();
 }
+
+// Disable nama donatur jika anonim
+document.getElementById('anonimCheck').addEventListener('change', function() {
+  const namaInput = document.querySelector('[name="nama_donatur"]');
+  namaInput.disabled = this.checked;
+});
 </script>
+
 {% endblock %}

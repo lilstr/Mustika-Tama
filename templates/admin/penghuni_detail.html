@@ -1,42 +1,156 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Detail Penghuni</h3>
+<div class="mb-4">
+  <a href="{{ url_for('admin_penghuni') }}" class="btn btn-outline-primary btn-sm">
+    <i class="bi bi-arrow-left"></i> Kembali
+  </a>
+</div>
 
-<div class="card mb-3">
-  <div class="card-body">
-    <p><b>NIK:</b> {{ p.nik }}</p>
-    <p><b>Nama:</b> {{ p.nama_anak }}</p>
-    <p><b>Jenis Kelamin:</b> {{ 'Laki-laki' if p.jenis_kelamin=='L' else 'Perempuan' }}</p>
-    <p><b>Usia:</b> {{ p.usia }}</p>
-    <p><b>Alamat:</b> {{ p.alamat }}</p>
-    <p><b>Pendidikan:</b> {{ p.pendidikan }}</p>
+<h3 class="mb-4">
+  <i class="bi bi-person-badge text-primary"></i> Detail Penghuni
+</h3>
 
-    <p><b>Berkebutuhan Khusus:</b>
-      {% if p.berkebutuhan_khusus == 'ya' %}
-        Ya
-        <br><b>Treatment:</b> {{ p.treatment_khusus }}
-      {% else %}
-        Tidak
-      {% endif %}
-    </p>
-
-    <p><b>Wali:</b> {{ p.nama_wali }} ({{ p.no_hp }})</p>
-
+<div class="row">
+  <div class="col-md-4 mb-4">
     {% if p.foto %}
-      <img src="{{ url_for('static', filename='uploads/' ~ p.foto) }}"
-           class="img-thumbnail" width="200">
+      <div class="card">
+        <img src="{{ url_for('static', filename='uploads/' ~ p.foto) }}"
+             class="card-img-top" style="height: 300px; object-fit: cover;">
+      </div>
+    {% else %}
+      <div class="card bg-light d-flex align-items-center justify-content-center" style="height: 300px;">
+        <div class="text-center text-muted">
+          <i class="bi bi-image" style="font-size: 3rem;"></i>
+          <p>Tidak ada foto</p>
+        </div>
+      </div>
     {% endif %}
+  </div>
+
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Informasi Pribadi</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label text-muted">NIK</label>
+            <p class="fw-bold">{{ p.nik }}</p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-muted">Nama Lengkap</label>
+            <p class="fw-bold">{{ p.nama_anak }}</p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label text-muted">Jenis Kelamin</label>
+            <p class="fw-bold">
+              {% if p.jenis_kelamin == 'L' %}
+                <span class="badge bg-info"><i class="bi bi-person"></i> Laki-laki</span>
+              {% else %}
+                <span class="badge bg-danger"><i class="bi bi-person"></i> Perempuan</span>
+              {% endif %}
+            </p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-muted">Usia</label>
+            <p class="fw-bold">{{ p.usia }} tahun</p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label text-muted">Tanggal Lahir</label>
+            <p class="fw-bold">{{ p.tanggal_lahir }}</p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-muted">Asal</label>
+            <p class="fw-bold">{{ p.asal }}</p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12">
+            <label class="form-label text-muted">Pendidikan</label>
+            <p class="fw-bold">{{ p.pendidikan }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<a href="{{ url_for('edit_penghuni', id=p.id) }}"
-   class="btn btn-warning">Edit</a>
+<div class="row mt-4">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Kebutuhan Khusus</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label text-muted">Status</label>
+        <p class="fw-bold mb-3">
+          {% if p.berkebutuhan_khusus == 'ya' %}
+            <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle"></i> Ada Kebutuhan Khusus</span>
+          {% else %}
+            <span class="badge bg-success"><i class="bi bi-check-circle"></i> Tidak Ada Kebutuhan Khusus</span>
+          {% endif %}
+        </p>
+        
+        {% if p.berkebutuhan_khusus == 'ya' %}
+          <label class="form-label text-muted">Treatment Khusus</label>
+          <p class="fw-bold">{{ p.treatment_khusus }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 
-<button class="btn btn-danger" data-bs-toggle="modal"
-        data-bs-target="#hapusModal">
-  Hapus
-</button>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Informasi Wali</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label text-muted">Nama Wali</label>
+        <p class="fw-bold mb-2">{{ p.nama_wali }}</p>
+
+        <label class="form-label text-muted">Nomor HP</label>
+        <p class="fw-bold mb-3">{{ p.no_hp }}</p>
+
+        <label class="form-label text-muted">Alamat</label>
+        <p class="fw-bold">{{ p.alamat }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Alasan Masuk Panti</h5>
+      </div>
+      <div class="card-body">
+        <p>{{ p.alasan }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 d-flex gap-2 flex-wrap">
+  <a href="{{ url_for('edit_penghuni', id=p.id) }}"
+     class="btn btn-warning">
+     <i class="bi bi-pencil-square"></i> Edit
+  </a>
+
+  <button class="btn btn-danger" data-bs-toggle="modal"
+          data-bs-target="#hapusModal">
+    <i class="bi bi-trash"></i> Hapus
+  </button>
+</div>
 
 {% include 'admin/modal_hapus_penghuni.html' %}
 

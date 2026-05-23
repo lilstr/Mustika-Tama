@@ -1,38 +1,107 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Data Penghuni</h3>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3>
+    <i class="bi bi-people-fill text-primary"></i> Data Penghuni Aktif
+  </h3>
+  <div class="d-flex gap-2">
+    <a href="{{ url_for('tambah_penghuni') }}" class="btn btn-primary btn-sm">
+      <i class="bi bi-plus-circle"></i> Tambah Penghuni
+    </a>
+    <a href="{{ url_for('laporan_penghuni') }}" class="btn btn-success btn-sm">
+      <i class="bi bi-file-earmark-text"></i> Download Laporan
+    </a>
+    <a href="{{ url_for('mantan_penghuni') }}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-archive"></i> Lihat Mantan Penghuni
+    </a>
+  </div>
+</div>
 
-<table class="table table-bordered table-sm">
-  <thead class="table-light">
-    <tr>
-      <th>Nama</th>
-      <th>JK</th>
-      <th>Usia</th>
-      <th>Berkebutuhan</th>
-      <th>Aksi</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for p in data %}
-    <tr>
-      <td>{{ p.nama_anak }}</td>
-      <td>{{ p.jenis_kelamin }}</td>
-      <td>{{ p.usia }}</td>
-      <td>
-        {% if p.berkebutuhan_khusus == 'ya' %}
-          <span class="badge bg-danger">Ya</span>
-        {% else %}
-          <span class="badge bg-success">Tidak</span>
-        {% endif %}
-      </td>
-      <td>
-        <a href="{{ url_for('penghuni_detail', id=p.id) }}"
-           class="btn btn-sm btn-warning">Detail</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<!-- Form Pencarian -->
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="GET" class="row g-3">
+      <div class="col-md-6">
+        <label for="search" class="form-label">
+          <i class="bi bi-search"></i> Cari Penghuni
+        </label>
+        <input type="text" class="form-control" id="search" name="search"
+               placeholder="Nama, NIK, Asal, atau Nama Wali..."
+               value="{{ request.args.get('search', '') }}">
+      </div>
+      <div class="col-md-4">
+        <label for="jenis_kelamin" class="form-label">
+          <i class="bi bi-gender-ambiguous"></i> Jenis Kelamin
+        </label>
+        <select class="form-select" id="jenis_kelamin" name="jenis_kelamin">
+          <option value="">Semua</option>
+          <option value="L" {% if request.args.get('jenis_kelamin') == 'L' %}selected{% endif %}>Laki-laki</option>
+          <option value="P" {% if request.args.get('jenis_kelamin') == 'P' %}selected{% endif %}>Perempuan</option>
+        </select>
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary me-2">
+          <i class="bi bi-search"></i> Cari
+        </button>
+        <a href="{{ url_for('admin_penghuni') }}" class="btn btn-outline-secondary">
+          <i class="bi bi-x-circle"></i> Reset
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if data %}
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th><i class="bi bi-person"></i> Nama</th>
+          <th><i class="bi bi-gender-ambiguous"></i> JK</th>
+          <th><i class="bi bi-calendar"></i> Usia</th>
+          <th><i class="bi bi-bandaid"></i> Kebutuhan Khusus</th>
+          <th><i class="bi bi-gear"></i> Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in data %}
+        <tr>
+          <td class="text-muted">{{ loop.index }}</td>
+          <td><strong>{{ p.nama_anak }}</strong></td>
+          <td>
+            {% if p.jenis_kelamin == 'L' %}
+              <span class="badge bg-info"><i class="bi bi-person"></i> Laki-laki</span>
+            {% else %}
+              <span class="badge bg-danger"><i class="bi bi-person"></i> Perempuan</span>
+            {% endif %}
+          </td>
+          <td>{{ p.usia }} tahun</td>
+          <td>
+            {% if p.berkebutuhan_khusus == 'ya' %}
+              <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle"></i> Ya</span>
+            {% else %}
+              <span class="badge bg-success"><i class="bi bi-check"></i> Tidak</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('penghuni_detail', id=p.id) }}"
+               class="btn btn-sm btn-primary">
+               <i class="bi bi-eye"></i> Detail
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+  <i class="bi bi-info-circle"></i> Tidak ada data penghuni aktif saat ini.
+</div>
+{% endif %}
 
 {% endblock %}

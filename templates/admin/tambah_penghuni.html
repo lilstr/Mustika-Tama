@@ -1,52 +1,219 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container mt-4">
-    <h3>Tambah Data Penghuni</h3>
-
-    <form method="post">
-        <div class="mb-2">
-            <label>Nama Penghuni</label>
-            <input type="text" name="nama" class="form-control" required>
-        </div>
-
-        <div class="mb-2">
-            <label>Jenis Kelamin</label>
-            <select name="jenis_kelamin" class="form-control" required>
-                <option value="">-- Pilih --</option>
-                <option>Laki-laki</option>
-                <option>Perempuan</option>
-            </select>
-        </div>
-
-        <div class="mb-2">
-            <label>Tanggal Lahir</label>
-            <input type="date" name="tanggal_lahir" class="form-control">
-        </div>
-
-        <div class="mb-2">
-            <label>Asal</label>
-            <input type="text" name="asal" class="form-control">
-        </div>
-
-        <div class="mb-2">
-            <label>Pendidikan</label>
-            <input type="text" name="pendidikan" class="form-control">
-        </div>
-
-        <div class="mb-2">
-            <label>Tanggal Masuk</label>
-            <input type="date" name="tanggal_masuk" class="form-control">
-        </div>
-
-        <div class="mb-3">
-            <label>Keterangan</label>
-            <textarea name="keterangan" class="form-control"></textarea>
-        </div>
-
-        <button class="btn btn-success">Simpan</button>
-        <a href="{{ url_for('admin_penghuni') }}" class="btn btn-secondary">Kembali</a>
-    </form>
+<!-- PAGE HEADER -->
+<div class="page-header-section">
+  <div class="page-header-content">
+    <h1 class="page-title">Formulir Tambah Penghuni</h1>
+    <p class="page-subtitle">Tambah Penghuni Admin</p>
+  </div>
 </div>
+
+<div class="container">
+  <div class="form-container">
+    <!-- FORM HEADER INFO -->
+    <div class="form-info-box">
+      <div class="form-info-icon">
+        <i class="bi bi-clipboard-check"></i>
+      </div>
+      <div class="form-info-content">
+        <h3>Tambah Penghuni Baru</h3>
+        <p>Pastikan semua data yang Anda masukkan akurat dan sesuai dengan dokumen resmi. Data akan langsung masuk ke database penghuni aktif.</p>
+      </div>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="registration-form">
+
+      <!-- BAGIAN 1: DATA ANAK -->
+      <div class="form-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <i class="bi bi-person-circle"></i>
+            Data Anak
+          </h3>
+          <span class="section-number">1</span>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">NIK Anak <span class="required">*</span></label>
+            <input type="text" name="nik" class="form-control form-control-lg" required placeholder="Nomor Induk Kependudukan">
+            <small class="form-text">Harus sesuai dengan akta kelahiran</small>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Nama Lengkap Anak <span class="required">*</span></label>
+            <input type="text" name="nama_anak" class="form-control form-control-lg" required placeholder="Nama lengkap sesuai dokumen">
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Jenis Kelamin <span class="required">*</span></label>
+            <select name="jenis_kelamin" class="form-select form-select-lg" required>
+              <option value="">-- Pilih Jenis Kelamin --</option>
+              <option value="L">Laki-laki</option>
+              <option value="P">Perempuan</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Tanggal Lahir <span class="required">*</span></label>
+            <input type="date" name="tanggal_lahir" class="form-control form-control-lg" required>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Usia <span class="required">*</span></label>
+            <input type="number" name="usia" class="form-control form-control-lg" required placeholder="Usia dalam tahun">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Asal <span class="required">*</span></label>
+            <input type="text" name="asal" class="form-control form-control-lg" required placeholder="Kota/Kabupaten asal">
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Pendidikan <span class="required">*</span></label>
+            <input type="text" name="pendidikan" class="form-control form-control-lg" required placeholder="Tingkat pendidikan terakhir">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Foto Anak</label>
+            <input type="file" name="foto" class="form-control form-control-lg" accept="image/*">
+            <small class="form-text">Format: JPG, PNG, JPEG. Maksimal 2MB</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAGIAN 2: KEBUTUHAN KHUSUS -->
+      <div class="form-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <i class="bi bi-heart-pulse"></i>
+            Kebutuhan Khusus
+          </h3>
+          <span class="section-number">2</span>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Ada kebutuhan khusus? <span class="required">*</span></label>
+            <select name="berkebutuhan_khusus" class="form-select form-select-lg" required id="berkebutuhan_khusus">
+              <option value="">-- Pilih --</option>
+              <option value="ya">Ya</option>
+              <option value="tidak">Tidak</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <div id="treatment_wrapper" class="d-none">
+              <label class="form-label">Treatment Khusus</label>
+              <textarea
+                name="treatment_khusus"
+                class="form-control form-control-lg"
+                rows="3"
+                placeholder="Jelaskan treatment khusus yang diperlukan..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAGIAN 3: DATA WALI -->
+      <div class="form-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <i class="bi bi-person-badge"></i>
+            Data Wali
+          </h3>
+          <span class="section-number">3</span>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nama Lengkap Wali <span class="required">*</span></label>
+            <input type="text" name="nama_wali" class="form-control form-control-lg" required placeholder="Nama wali/orang tua">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">No. HP Wali <span class="required">*</span></label>
+            <input type="tel" name="no_hp" class="form-control form-control-lg" required placeholder="081234567890">
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Alamat Lengkap <span class="required">*</span></label>
+            <textarea
+              name="alamat"
+              class="form-control form-control-lg"
+              rows="3"
+              required
+              placeholder="Alamat lengkap wali/orang tua..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAGIAN 4: ALASAN PENDAFTARAN -->
+      <div class="form-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <i class="bi bi-chat-left-quote"></i>
+            Alasan Pendaftaran
+          </h3>
+          <span class="section-number">4</span>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Jelaskan alasan mengapa anak memerlukan bantuan <span class="required">*</span></label>
+            <textarea
+              name="alasan"
+              class="form-control form-control-lg"
+              rows="5"
+              placeholder="Ceritakan latar belakang keluarga dan alasan pendaftaran dengan detail..."
+              required
+            ></textarea>
+            <small class="form-text">Tuliskan dengan jujur dan detail untuk membantu kami memahami situasi anak</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- INFO PENTING BOX -->
+      <div class="form-info-section">
+        <div class="info-box">
+          <h5 class="info-title"><i class="bi bi-shield-exclamation"></i> Pernyataan & Komitmen</h5>
+          <ul class="info-list">
+            <li><strong>Keakuratan Data:</strong> Saya menyatakan bahwa semua data yang saya isi adalah benar dan dapat dipertanggungjawabkan</li>
+            <li><strong>Verifikasi:</strong> Data akan langsung masuk ke sistem sebagai penghuni aktif</li>
+            <li><strong>Privasi:</strong> Semua data akan dijaga kerahasiaannya sesuai dengan kebijakan privasi panti</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SUBMIT BUTTONS -->
+      <div class="form-actions">
+        <a href="{{ url_for('admin_penghuni') }}" class="btn btn-secondary btn-action">
+          <i class="bi bi-arrow-left"></i> Kembali
+        </a>
+        <button type="submit" class="btn btn-primary btn-action btn-action-submit">
+          <i class="bi bi-check-lg"></i> Tambah Penghuni
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+document.getElementById('berkebutuhan_khusus').addEventListener('change', function() {
+  const wrapper = document.getElementById('treatment_wrapper');
+  if (this.value === 'ya') {
+    wrapper.classList.remove('d-none');
+  } else {
+    wrapper.classList.add('d-none');
+    document.querySelector('[name="treatment_khusus"]').value = '';
+  }
+});
+</script>
 
 {% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h3 class="mb-1">
+      <i class="bi bi-archive text-secondary"></i> Data Mantan Penghuni
+    </h3>
+    <p class="text-muted small">Total: <strong>{{ data|length }}</strong> mantan penghuni</p>
+  </div>
+  <a href="{{ url_for('admin_penghuni') }}" class="btn btn-outline-primary">
+    <i class="bi bi-arrow-left"></i> Kembali ke Penghuni Aktif
+  </a>
+</div>
+
+<!-- Form Pencarian -->
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="GET" class="row g-3">
+      <div class="col-md-4">
+        <label for="search" class="form-label">
+          <i class="bi bi-search"></i> Cari Mantan Penghuni
+        </label>
+        <input type="text" class="form-control" id="search" name="search"
+               placeholder="Nama, NIK, Asal, Nama Wali, atau Alasan Keluar..."
+               value="{{ request.args.get('search', '') }}">
+      </div>
+      <div class="col-md-3">
+        <label for="jenis_kelamin" class="form-label">
+          <i class="bi bi-gender-ambiguous"></i> Jenis Kelamin
+        </label>
+        <select class="form-select" id="jenis_kelamin" name="jenis_kelamin">
+          <option value="">Semua</option>
+          <option value="L" {% if request.args.get('jenis_kelamin') == 'L' %}selected{% endif %}>Laki-laki</option>
+          <option value="P" {% if request.args.get('jenis_kelamin') == 'P' %}selected{% endif %}>Perempuan</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="alasan_keluar" class="form-label">
+          <i class="bi bi-door-closed"></i> Alasan Keluar
+        </label>
+        <select class="form-select" id="alasan_keluar" name="alasan_keluar">
+          <option value="">Semua</option>
+          <option value="meninggal" {% if request.args.get('alasan_keluar') == 'meninggal' %}selected{% endif %}>Meninggal</option>
+          <option value="diadopsi" {% if request.args.get('alasan_keluar') == 'diadopsi' %}selected{% endif %}>Diadopsi</option>
+          <option value="kembali_keluarga" {% if request.args.get('alasan_keluar') == 'kembali_keluarga' %}selected{% endif %}>Kembali ke Keluarga</option>
+          <option value="pindah_panti" {% if request.args.get('alasan_keluar') == 'pindah_panti' %}selected{% endif %}>Pindah Panti</option>
+        </select>
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary me-2">
+          <i class="bi bi-search"></i> Cari
+        </button>
+        <a href="{{ url_for('mantan_penghuni') }}" class="btn btn-outline-secondary">
+          <i class="bi bi-x-circle"></i> Reset
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if data %}
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th><i class="bi bi-person"></i> Nama</th>
+          <th><i class="bi bi-gender-ambiguous"></i> JK</th>
+          <th><i class="bi bi-calendar-event"></i> Umur</th>
+          <th><i class="bi bi-door-closed"></i> Alasan Keluar</th>
+          <th><i class="bi bi-calendar"></i> Tanggal</th>
+          <th><i class="bi bi-action"></i> Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in data %}
+        <tr>
+          <td class="text-muted">{{ loop.index }}</td>
+          <td>
+            <strong>{{ m.nama_anak }}</strong>
+            <br>
+            <small class="text-muted">{{ m.asal }}</small>
+          </td>
+          <td>
+            {% if m.jenis_kelamin == 'L' %}
+              <span class="badge bg-info"><i class="bi bi-person"></i> Laki-laki</span>
+            {% else %}
+              <span class="badge bg-danger"><i class="bi bi-person-fill"></i> Perempuan</span>
+            {% endif %}
+          </td>
+          <td>
+            <strong>{{ m.usia }}</strong> tahun
+          </td>
+          <td>
+            {% if m.alasan_keluar == 'meninggal' %}
+              <span class="badge bg-dark"><i class="bi bi-dash-circle"></i> Meninggal</span>
+            {% elif m.alasan_keluar == 'diadopsi' %}
+              <span class="badge bg-success"><i class="bi bi-heart-fill"></i> Diadopsi</span>
+            {% elif m.alasan_keluar == 'kembali_keluarga' %}
+              <span class="badge bg-warning text-dark"><i class="bi bi-house-heart"></i> Keluarga</span>
+            {% elif m.alasan_keluar == 'pindah_panti' %}
+              <span class="badge bg-info"><i class="bi bi-building"></i> Pindah Panti</span>
+            {% else %}
+              <span class="badge bg-secondary">{{ m.alasan_keluar }}</span>
+            {% endif %}
+          </td>
+          <td>
+            <small class="text-muted">{{ m.tanggal_keluar }}</small>
+          </td>
+          <td>
+            <a href="{{ url_for('mantan_penghuni_detail', id=m.id) }}" class="btn btn-sm btn-outline-info">
+              <i class="bi bi-eye"></i> Detail
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+  <i class="bi bi-info-circle"></i> Tidak ada mantan penghuni saat ini.
+</div>
+{% endif %}
+
+{% endblock %}
